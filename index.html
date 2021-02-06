@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link rel="stylesheet" href="./src/style.css">
+</head>
+
+<body>
+
+    <div class="side-bar">
+        <center>
+            <h1>2D Web CAD Canvas</h1>
+            <h3>Models:</h3>
+        </center>
+        <div class="side-menu-item">
+            <input type="radio" id="paint" name="model" value="paint">
+            <label for="paint">Paint<label>
+                    <br>
+                    <input type="radio" id="line" name="model" value="line">
+                    <label for="paint">Line<label>
+                            <br>
+                            <input type="radio" id="square" name="model" value="square">
+                            <label for="paint">Square<label>
+                                    <br>
+                                    <input type="radio" id="polygon" name="model" value="polygon">
+                                    <label for="paint">Polygon<label>
+                                            <br>
+        </div>
+        <center>
+            <h3>Colors:</h3>
+            <input id="color-input" type="color" value="#000000"><br><br>
+        </center>
+
+
+        <center>
+            <button class="menu-button1"> Reset </button>
+            <br>
+            <button class="menu-button2"> Export </button>
+            <br>
+            <button class="menu-button3"> Import </button>
+            <br>
+        </center>
+
+    </div>
+
+    <canvas id="glCanvas" width="1028" height="512">
+    </canvas>
+
+    <script id="vertex-shader" type="x-shader/x-vertex">
+        attribute vec4 vPosition;
+        attribute vec4 vColor;
+        varying vec4 fColor;
+        void main()
+        {
+          gl_Position = vPosition;
+          fColor = vColor;
+        }
+      </script>
+
+    <script id="fragment-shader" type="x-shader/x-fragment">
+        precision mediump float;
+        varying vec4 fColor;
+        void main()
+        {
+          gl_FragColor = fColor;
+        }
+      </script>
+
+    <script type="text/javascript" src="./common/webgl-utils.js"></script>
+    <script type="text/javascript" src="./common/initShaders.js"></script>
+    <script type="text/javascript" src="./common/MV.js"></script>
+    <script type="module" src="./src/script.js"></script>
+</body>
+
+</html>

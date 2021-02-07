@@ -3,8 +3,12 @@
 
 import { init } from './shared/init.js';
 import { context } from './app.js';
+
 import { mouseDownLineEvent, mouseUpLineEvent, mouseMovingLineEvent } from './models/line.js';
 import { mouseDownEditLineEvent, mouseUpEditLineEvent, mouseMovingEditLineEvent } from './models/line.js';
+
+import {mouseDownSquareEvent, mouseMovingSquareEvent, mouseUpSquareEvent} from './models/square.js'; 
+
 import { clear } from './shared/utils.js';
 
 const attachEventListener = (context) => {
@@ -15,10 +19,13 @@ const attachEventListener = (context) => {
             case "paint":
                 break;
             case "edit-line":
-                mouseMovingEditLineEvent(event);
+                mouseMovingEditLineEvent(event, context);
+                break;
+            case "square":
+                mouseMovingSquareEvent(event, context);
                 break;
             default:
-                mouseMovingLineEvent(event);
+                mouseMovingLineEvent(event, context);
                 break;
         }
     });
@@ -29,10 +36,13 @@ const attachEventListener = (context) => {
             case "paint":
                 break;
             case "edit-line":
-                mouseDownEditLineEvent(event);
+                mouseDownEditLineEvent(event, context);
+                break;
+            case "square":
+                mouseDownSquareEvent(event, context);
                 break;
             default:
-                mouseDownLineEvent(event);
+                mouseDownLineEvent(event, context);
                 break;
         }
     });
@@ -43,10 +53,13 @@ const attachEventListener = (context) => {
             case "paint":
                 break;
             case "edit-line":
-                mouseUpEditLineEvent();
+                mouseUpEditLineEvent(context);
+                break;
+            case "square":
+                mouseUpSquareEvent(context);
                 break;
             default:
-                mouseUpLineEvent();
+                mouseUpLineEvent(context);
                 break;
         }
     });

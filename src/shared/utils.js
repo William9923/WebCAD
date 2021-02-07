@@ -1,7 +1,15 @@
 export const clear = (context) => {
+
+    context.mouseClicked = false;
+
     context.points = [];
-    context.currPoints = [];
     context.colors = [];
+    context.dots = [];
+    context.startIdx = [];
+    context.types = [];
+    context.mode = "";
+
+    context.editPointsIdx = -1;
     render(context);
 }
 
@@ -38,23 +46,26 @@ export const render = (context) => {
     for (let i = 0; i < types.length; i++) {
         if (types[i] === "line") {
             gl.drawArrays(gl.LINES, startIdx[i], dots[i]);
+        } else if (types[i] === "square") {
+            gl.drawArrays(gl.TRIANGLE_FAN, startIdx[i], dots[i]);
         }
     }
     context.gl = gl;
 }
 
-export const createSquare = (start, end) => {
+export const createSquare = (start, end, context) => {
 
-    let beta = (Math.PI / 2.0) - Math.atan2(end[1] - begin[1], end[0] - begin[0]);
-    let delta = Math.cos(beta) * width;
+    let delta_x = Math.abs(end[0] - start[0]);
+    let delta_y = Math.abs(end[1] - start[1]);
+    let delta = Math.max(delta_x, delta_y);
 
     return [
         vec2(start[0], start[1]),
         vec2(start[0] + delta, start[1]),
-        vec2(start[0] + delta, start[1] + delta),
-        vec2(start[0], start[1] + delta)
+        vec2(start[0] + delta, start[1] - delta),
+        vec2(start[0], start[1] - delta)
     ];
 
 }
 
-export const createPolygon = () => {}
+export const createPolygon = () => { }

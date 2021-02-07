@@ -5,7 +5,7 @@ import { render } from '../shared/utils.js';
 import { euclidianDistance } from '../shared/math.js';
 
 
-export const mouseDownLineEvent = (event) => {
+export const mouseDownLineEvent = (event, context) => {
     context.mouseClicked = true;
     context.mode = "line";
 
@@ -27,7 +27,7 @@ export const mouseDownLineEvent = (event) => {
 
 }
 
-export const mouseUpLineEvent = () => {
+export const mouseUpLineEvent = (context) => {
     context.mouseClicked = false;
 }
 
@@ -41,7 +41,7 @@ export const mouseMovingLineEvent = (event) => {
     }
 }
 
-export const mouseDownEditLineEvent = () => {
+export const mouseDownEditLineEvent = (event, context) => {
 
     context.mouseClicked = true;
     context.mode = "edit-line"
@@ -82,13 +82,13 @@ export const mouseDownEditLineEvent = () => {
 
 }
 
-export const mouseUpEditLineEvent = () => {
+export const mouseUpEditLineEvent = (context) => {
 
     context.mouseClicked = false;
     context.editPointsIdx = -1; // default
 }
 
-export const mouseMovingEditLineEvent = (event) => {
+export const mouseMovingEditLineEvent = (event, context) => {
 
     if (context.mouseClicked && context.editPointsIdx != -1
         && context.editPointsIdx < context.points.length

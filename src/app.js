@@ -11,7 +11,7 @@ export const colorAttr = "vColor";
 export const threshold = 0.1;
 
 /* Application Context */
-export let context = {
+export var context = {
     gl: null,
     canvas: null,
 
@@ -26,30 +26,7 @@ export let context = {
     dots: [],
     startIdx: [],
     types: [],
-    mode: "line",
+    mode: "",
 
     editPointsIdx: -1
-}
-
-export const mouseDownSquareEvent = () => {
-
-}
-
-export const mouseUpSquareEvent = () => {
-
-}
-
-export const mouseMovingSquareEvent = (event) => {
-
-}
-export const mouseDownPolygonEvent = () => {
-
-}
-
-export const mouseUpPolygonEvent = () => {
-
-}
-
-export const mouseMovingPolygonEvent = (event) => {
-
 }

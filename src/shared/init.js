@@ -2,10 +2,12 @@
 "use strict";
 
 import {
-    fragmentScriptId, maxNumberOfPoints,
+    fragmentScriptId,
     colorAttr, positionalAttr,
     vertexScriptId
 } from '../app.js';
+
+const maxNumberOfPoints = 20000000;
 
 export const init = (context) => {
 

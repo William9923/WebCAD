@@ -8,53 +8,37 @@ export const fragmentScriptId = "fragment-shader";
 export const positionalAttr = "vPosition";
 export const colorAttr = "vColor";
 
-export const maxNumberOfPoints = 200000;
+const threshold = 0.1;
 
-import {render} from './shared/utils.js';
+import { render } from './shared/utils.js';
+import { euclidianDistance } from './shared/math.js';
 
 /* Application Context */
 export let context = {
     gl: null,
-    canvas : null,
+    canvas: null,
 
-    bufferId : null,
-    cbufferId : null,
+    bufferId: null,
+    cbufferId: null,
 
-    mouseClicked : false,
-    currentColor : [0,0,0],
-    
-    points : [],
+    mouseClicked: false,
+    currentColor: [0, 0, 0],
+
+    points: [],
     colors: [],
     dots: [],
-    startIdx : [],
-    types : [],
+    startIdx: [],
+    types: [],
     mode: "line",
+
+    editPointsIdx: -1
 }
 
-// export const mouseDownFreeDrawEvent = () => {
-//     context.mouseClicked = true; 
-//     context.mode = "paint"; 
-// }
-
-// export const mouseUpFreeDrawEvent = () => {
-//     context.mouseClicked = false;
-//     context.currPoints = []
-// }
-
-// export const mouseMovingFreeDrawEvent = (event) => {
-//     if (context.mouseClicked && context.mode === "paint") {
-//         let x = -1 + 2 * event.offsetX / context.canvas.width;
-//         let y = -1 + 2 * (context.canvas.height- event.offsetY) / context.canvas.height;
-//         context.currPoints.push(vec2(x,y));
-//         render(context);
-//     }
-// }
-
 const lengthDotType = (type) => {
-    switch(type) {
-        case "line" : return 2;
-        case "square" : return 4;
-        case "polygon" : return 5;
+    switch (type) {
+        case "line": return 2;
+        case "square": return 4;
+        case "polygon": return 5;
     }
 }
 
@@ -65,17 +49,17 @@ export const mouseDownLineEvent = (event) => {
     context.types.push(context.mode);
     context.dots.push(lengthDotType(context.mode));
     context.startIdx.push(
-        context.startIdx.length > 0 ? 
-            context.startIdx[context.startIdx.length-1] + lengthDotType(context.types[context.types.length - 1]) 
+        context.startIdx.length > 0 ?
+            context.startIdx[context.startIdx.length - 1] + lengthDotType(context.types[context.types.length - 1])
             : 0
     );
-    
+
     let x = -1 + 2 * event.offsetX / context.canvas.width;
-    let y = -1 + 2 * (context.canvas.height- event.offsetY) / context.canvas.height;
-    
+    let y = -1 + 2 * (context.canvas.height - event.offsetY) / context.canvas.height;
+
     // for start point and last point
     for (let i = 0; i < 2; i++) {
-        context.points.push(vec2(x,y));
+        context.points.push(vec2(x, y));
     }
 
 }
@@ -87,11 +71,72 @@ export const mouseUpLineEvent = () => {
 export const mouseMovingLineEvent = (event) => {
     if (context.mouseClicked && context.mode === "line") {
         let x = -1 + 2 * event.offsetX / context.canvas.width;
-        let y = -1 + 2 * (context.canvas.height- event.offsetY) / context.canvas.height;
+        let y = -1 + 2 * (context.canvas.height - event.offsetY) / context.canvas.height;
         let lastIndex = context.points.length - 1;
-        context.points[lastIndex] = vec2(x,y);
+        context.points[lastIndex] = vec2(x, y);
         render(context);
     }
+}
+
+export const mouseDownEditLineEvent = () => {
+
+    context.mouseClicked = true;
+    context.mode = "edit-line"
+
+    let x = -1 + 2 * event.offsetX / context.canvas.width;
+    let y = -1 + 2 * (context.canvas.height - event.offsetY) / context.canvas.height;
+
+    let minIdx = -1;
+    let min = 999;
+
+    context.types.forEach((val, idx) => {
+
+        if (val === "line") {
+            let arrIdx = context.startIdx[idx];
+            let startLine = context.points[arrIdx];
+            let endLine = context.points[arrIdx + 1];
+
+            const firstDistance = euclidianDistance(startLine, vec2(x, y));
+            const secondDistance = euclidianDistance(endLine, vec2(x, y));
+
+            if (firstDistance < threshold && firstDistance < min) {
+                min = firstDistance;
+                minIdx = arrIdx;
+            }
+
+            if (secondDistance < threshold && secondDistance < min) {
+                min = secondDistance;
+                minIdx = arrIdx + 1;
+            }
+        }
+
+    });
+
+    // threshold passed, found target
+    if (minIdx != -1 && min != 999) {
+        context.editPointsIdx = minIdx;
+    }
+
+}
+
+export const mouseUpEditLineEvent = () => {
+
+    context.mouseClicked = false;
+    context.editPointsIdx = -1; // default
+}
+
+export const mouseMovingEditLineEvent = (event) => {
+
+    if (context.mouseClicked && context.editPointsIdx != -1
+        && context.editPointsIdx < context.points.length
+        && context.mode === "edit-line") {
+        let x = -1 + 2 * event.offsetX / context.canvas.width;
+        let y = -1 + 2 * (context.canvas.height - event.offsetY) / context.canvas.height;
+
+        context.points[context.editPointsIdx] = vec2(x, y);
+        render(context);
+    }
+
 }
 
 export const mouseDownSquareEvent = () => {

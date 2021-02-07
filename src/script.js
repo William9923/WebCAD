@@ -2,16 +2,20 @@
 "use strict";
 
 import { init } from './shared/init.js';
-import { context,  mouseDownLineEvent,  mouseUpLineEvent, mouseMovingLineEvent } from './app.js';
+import { context } from './app.js';
+import { mouseDownLineEvent,  mouseUpLineEvent, mouseMovingLineEvent } from './app.js';
+import { mouseDownEditLineEvent,  mouseUpEditLineEvent, mouseMovingEditLineEvent } from './app.js';
 import { clear } from './shared/utils.js';
 
 const attachEventListener = (context) => {
 
     context.canvas.addEventListener("mousemove", function (event) {
         let val = document.querySelector("#selector-model").value;
-        console.log(val);
         switch (val) {
             case "paint" : 
+                break;
+            case "edit-line":
+                mouseMovingEditLineEvent(event);
                 break;
             default: 
                 mouseMovingLineEvent(event);
@@ -21,9 +25,11 @@ const attachEventListener = (context) => {
 
     context.canvas.addEventListener("mousedown", function (event) {
         let val = document.querySelector("#selector-model").value;
-        console.log(val);
         switch (val) {
             case "paint" : 
+                break;
+            case "edit-line":
+                mouseDownEditLineEvent(event);
                 break;
             default : 
                 mouseDownLineEvent(event);
@@ -33,9 +39,11 @@ const attachEventListener = (context) => {
 
     context.canvas.addEventListener("mouseup", function () {
         let val = document.querySelector("#selector-model").value;
-        console.log(val);
         switch (val) {
             case "paint" : 
+                break;
+            case "edit-line":
+                mouseUpEditLineEvent();
                 break;
             default : 
                 mouseUpLineEvent();

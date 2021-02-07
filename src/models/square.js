@@ -35,7 +35,7 @@ export const mouseMovingSquareEvent = (event, context) => {
         let y = -1 + 2 * (context.canvas.height - event.offsetY) / context.canvas.height;
         let lastIndex = (context.points.length - 4);
 
-        const arrOfPoints = createSquare(context.points[lastIndex], vec2(x, y), context);
+        const arrOfPoints = createSquare(context.points[lastIndex], vec2(x, y));
 
         const [forthPoints, thirdPoints, secondPoints, ...rest] = arrOfPoints.reverse();
 

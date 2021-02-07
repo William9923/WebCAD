@@ -21,6 +21,7 @@ export const lengthDotType = (type) => {
     }
 }
 
+
 // const createLine = (begin, end, lineWidth) => {
 //     // get initial and final pts on a line, return rectangle with width
 //     var width = lineWidth * 0.001;
@@ -53,19 +54,46 @@ export const render = (context) => {
     context.gl = gl;
 }
 
-export const createSquare = (start, end, context) => {
+const quadran = (x, y) => {
+    if (x == 1 && y == 1) {
+        return 1;
+    } else if (x == -1 && y == 1) {
+        return 3;
+    } else if (x == -1 && y == -1) {
+        return 2;
+    } else {
+        return 4;
+    }
 
+}
+
+export const createSquare = (start, end) => {
     let delta_x = Math.abs(end[0] - start[0]);
     let delta_y = Math.abs(end[1] - start[1]);
     let delta = Math.max(delta_x, delta_y);
 
-    return [
-        vec2(start[0], start[1]),
-        vec2(start[0] + delta, start[1]),
-        vec2(start[0] + delta, start[1] - delta),
-        vec2(start[0], start[1] - delta)
-    ];
+    let beta_x = (end[0] - start[0]) < 0 ? -1 : 1;
+    let beta_y = (end[1] - start[1] > 0) ? -1 : 1;
 
+    delta_x = delta * beta_x;
+    delta_y = delta * beta_y;
+
+    switch (quadran(beta_x, beta_y)) {
+        case 1:
+            return [
+                vec2(start[0], start[1]),
+                vec2(start[0] + delta_x, start[1]),
+                vec2(start[0] + delta_x, start[1] - delta_y),
+                vec2(start[0], start[1] - delta_y)
+            ];
+        default:
+            return [
+                vec2(start[0], start[1]),
+                vec2(start[0], start[1] - delta_y),
+                vec2(start[0] + delta_x, start[1] - delta_y),
+                vec2(start[0] + delta_x, start[1]),
+            ];
+    }
 }
 
 export const createPolygon = () => { }

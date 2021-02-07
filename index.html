@@ -26,9 +26,8 @@
       <div class="col s6 offset-s3">
         <center>
           <span class="flow-text black-text"><strong>Models: </strong></span><br>
-          <select name="model" class="browser-default" required>
+          <select id="selector-model" name="model" class="browser-default" required>
             <option value="" disabled selected>Choose your option</option>
-            <option value="paint">Paint</option>
             <option value="line">Line</option>
             <option value="square">Square</option>
             <option value="poly">Polygon</option>
@@ -49,7 +48,7 @@
       </center>
     </div>
     <div class="btn-flex-wrapper">
-      <button class="btn waves-effect waves-light btn-small purple" type="button" name="action">Reset
+      <button class="btn waves-effect waves-light btn-small purple" id="resetBtn" type="button" name="action">Reset
         <i class="material-icons right">search</i>
       </button>
       <button class="btn waves-effect waves-light btn-small purple" type="button" name="action">Import

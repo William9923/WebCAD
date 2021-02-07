@@ -46,8 +46,6 @@ export const init = (context) => {
     context.bufferId = bufferId;
     context.canvas = canvas;
     context.gl = gl;
-
-    // Bind Event Listener
 }
 
 const createShader = (gl, type, source) => {

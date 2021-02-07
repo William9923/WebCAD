@@ -5,17 +5,25 @@ export const clear = (context) => {
     render(context);
 }
 
-const createLine = (begin, end, lineWidth) => {
-    // get initial and final pts on a line, return rectangle with width
-    var width = lineWidth * 0.001;
-    var beta = (Math.PI / 2.0) - Math.atan2(end[1] - begin[1], end[0] - begin[0]);
-    var delta_x = Math.cos(beta) * width;
-    var delta_y = Math.sin(beta) * width;
-    return [vec2(begin[0] - delta_x, begin[1] + delta_y),
-    vec2(begin[0] + delta_x, begin[1] - delta_y),
-    vec2(end[0] + delta_x, end[1] - delta_y),
-    vec2(end[0] - delta_x, end[1] + delta_y)];
+export const lengthDotType = (type) => {
+    switch (type) {
+        case "line": return 2;
+        case "square": return 4;
+        case "polygon": return 5;
+    }
 }
+
+// const createLine = (begin, end, lineWidth) => {
+//     // get initial and final pts on a line, return rectangle with width
+//     var width = lineWidth * 0.001;
+//     var beta = (Math.PI / 2.0) - Math.atan2(end[1] - begin[1], end[0] - begin[0]);
+//     var delta_x = Math.cos(beta) * width;
+//     var delta_y = Math.sin(beta) * width;
+//     return [vec2(begin[0] - delta_x, begin[1] + delta_y),
+//     vec2(begin[0] + delta_x, begin[1] - delta_y),
+//     vec2(end[0] + delta_x, end[1] - delta_y),
+//     vec2(end[0] - delta_x, end[1] + delta_y)];
+// }
 
 export const render = (context) => {
 

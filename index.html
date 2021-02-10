@@ -41,7 +41,7 @@
             <div class="col s12">
                 <center>
                     <span class="flow-text black-text"><strong>Colors : </strong></span><br>
-                    <input id="color-input" type="color" value="#000000">
+                    <input id="color-input" type="color" value="#000002">
                 </center>
             </div>
         </div>
@@ -56,14 +56,15 @@
                 name="action">Reset
                 <i class="material-icons right">search</i>
             </button>
-            <button class="btn waves-effect waves-light btn-small purple" type="button" name="action">Import
+            <button class="btn waves-effect waves-light btn-small purple" id="importBtn" type="button" name="action">Import
                 <i class="material-icons right">search</i>
             </button>
-            <button class="btn waves-effect waves-light btn-small purple" type="button" name="action">Export
+            <button class="btn waves-effect waves-light btn-small purple" id="exportBtn" type="button" name="action">Export
                 <i class="material-icons right">search</i>
             </button>
-
         </div>
+
+        <input type="file" id="file-import">
 
         <footer>
             <div class="container centered">
@@ -74,8 +75,6 @@
         </footer>
 
     </div>
-
-
 
     <script id="vertex-shader" type="x-shader/x-vertex">
         attribute vec4 vPosition;

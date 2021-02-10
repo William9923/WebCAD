@@ -5,12 +5,11 @@ import Shape from './Shape.js';
 
 export default class Line extends Shape {
     constructor(startPoint, endPoint, color) {
-        super([startPoint, endPoint], color)
+        super([startPoint, endPoint], color);
+        this._type = "line";
     }
 
-    getShapeType() {
-        return "line";
-    }
+    
 }
 
 export const createLineVectorColor = (color) => {

@@ -5,10 +5,11 @@ export default class Shape {
     constructor(points, color) {
         this._points = points;
         this._color = color;
+        this._type = "shape";
     }
 
     getShapeType() {
-        return "shape";
+        return this._type;
     }
 
     getPoints() {

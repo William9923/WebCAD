@@ -1,6 +1,6 @@
 import { Context } from '../models/Context.js';
 import Line, { createLineVectorColor } from '../models/Line.js';
-import Square, { createSquareVectorColor } from '../models/Square.js';
+import Square, { createSquareVectorColor, findCrossPoint } from '../models/Square.js';
 
 export const clear = () => {
     Context.getInstance().reset();
@@ -86,3 +86,28 @@ export const render = () => {
         }
     })
 }
+
+export const parseImport = (text) => {
+    
+    /* Parsing Code */
+    const shapes = JSON.parse(text);
+    console.log(shapes);
+    Context.getInstance().reset();
+    
+    shapes.forEach(shape => {
+        switch(shape._type) {
+            case "line" :
+                Context.getInstance().addShape(new Line(shape._points[0], shape._points[1], shape._color));
+                break;
+            case "square" :
+                Context.getInstance().addShape(new Square(shape._points[0], findCrossPoint(shape._points, shape._points[0]), shape._color));
+                break;
+            // add polygon
+        }
+    })
+    render();
+}
+
+export const prepareExport = () => JSON.stringify(Context.getInstance().getShapes()); 
+
+

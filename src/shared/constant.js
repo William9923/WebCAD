@@ -8,5 +8,5 @@ export const fragmentScriptId = "fragment-shader";
 export const positionalAttr = "vPosition";
 export const colorAttr = "vColor";
 
-export const threshold = 0.1;
+export const threshold = 0.025;
 export const maxNumberOfPoints = 200000;

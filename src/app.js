@@ -8,8 +8,9 @@ import { mouseDownLineEvent, mouseUpLineEvent, mouseMovingLineEvent } from './ev
 import { mouseDownEditLineEvent, mouseUpEditLineEvent, mouseMovingEditLineEvent } from './events/lineEvent.js';
 
 import { mouseDownSquareEvent, mouseMovingSquareEvent, mouseUpSquareEvent } from './events/squareEvent.js';
+import { mouseDownEditSquareEvent, mouseMovingEditSquareEvent, mouseUpEditSquareEvent } from './events/squareEvent.js';
 
-import { clear, render } from './shared/utils.js';
+import { clear } from './shared/utils.js';
 
 const attachEventListener = () => {
     const canvas = Context.getInstance().getCanvas();
@@ -23,6 +24,9 @@ const attachEventListener = () => {
                 break;
             case "square":
                 mouseMovingSquareEvent(event);
+                break;
+            case "edit-square":
+                mouseMovingEditSquareEvent(event);
                 break;
             default:
                 mouseMovingLineEvent(event);
@@ -42,6 +46,9 @@ const attachEventListener = () => {
             case "square":
                 mouseDownSquareEvent(event);
                 break;
+            case "edit-square":
+                mouseDownEditSquareEvent(event);
+                break;
             default:
                 mouseDownLineEvent(event);
                 break;
@@ -58,6 +65,9 @@ const attachEventListener = () => {
                 break;
             case "square":
                 mouseUpSquareEvent();
+                break;
+            case "edit-square":
+                mouseUpEditSquareEvent();
                 break;
             default:
                 mouseUpLineEvent();

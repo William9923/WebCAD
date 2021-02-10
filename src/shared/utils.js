@@ -56,13 +56,6 @@ export const render = () => {
     const points = createPoints();
     const colors = createColors();
     const startIdx = createStartIdx();
-
-    console.log("Dots : ");
-    console.log(dots);
-    console.log("Points : ");
-    console.log(points);
-    console.log("StartIdx");
-    console.log(startIdx);
     let gl = Context.getInstance().getGl();
 
     gl.clear(gl.COLOR_BUFFER_BIT);

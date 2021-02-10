@@ -28,6 +28,7 @@ const attachEventListener = () => {
                 mouseMovingLineEvent(event);
                 break;
         }
+        
     });
 
     canvas.addEventListener("mousedown", function (event) {

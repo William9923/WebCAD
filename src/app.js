@@ -81,7 +81,9 @@ const attachEventListener = () => {
     document.querySelector("#resetBtn").addEventListener("click", function () {
         clear();
     });
+}
 
+const attachExternalFileListener = () => {
     document.querySelector("#file-import").addEventListener("change", function (event) {
         file = event.target.files[0];
 
@@ -115,12 +117,32 @@ const attachEventListener = () => {
         downloadAnchorNode.click();
         downloadAnchorNode.remove();
 
-    })
+    });
+
+}
+
+const attachColorPickerListener = () => {
+    document.querySelector("#color-input").addEventListener("change", function (event) {
+        const val = event.target.value;
+
+        document.querySelector("#color-input").value = val;
+
+        const hex_code = val.split("");
+        const red = parseInt(hex_code[1] + hex_code[2], 16);
+        const green = parseInt(hex_code[3] + hex_code[4], 16);
+        const blue = parseInt(hex_code[5] + hex_code[6], 16);
+
+        Context.getInstance().setColor([red/255.0, green/255.0, blue/255.0]);
+        console.log("tes");
+        console.log(Context.getInstance().getColor());
+    });
 }
 
 const main = () => {
     init();
     attachEventListener();
+    attachExternalFileListener();
+    attachColorPickerListener();
 }
 
 window.onload = main;

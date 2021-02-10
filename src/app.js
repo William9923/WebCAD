@@ -1,32 +1,75 @@
-/* Application Constant */
-export const vertexScriptType = "x-shader/x-vertex";
-export const fragmentScriptType = "x-shader/x-fragment";
+/* eslint no-console:0 consistent-return:0 */
+"use strict";
 
-export const vertexScriptId = "vertex-shader";
-export const fragmentScriptId = "fragment-shader";
+import { init } from './shared/init.js';
+import { Context } from './models/Context.js';
 
-export const positionalAttr = "vPosition";
-export const colorAttr = "vColor";
+import { mouseDownLineEvent, mouseUpLineEvent, mouseMovingLineEvent } from './events/lineEvent.js';
+import { mouseDownEditLineEvent, mouseUpEditLineEvent, mouseMovingEditLineEvent } from './events/lineEvent.js';
 
-export const threshold = 0.1;
+import { clear } from './shared/utils.js';
 
-/* Application Context */
-export var context = {
-    gl: null,
-    canvas: null,
+const attachEventListener = () => {
+    const canvas = Context.getInstance().getCanvas();
+    canvas.addEventListener("mousemove", function (event) {
+        let val = document.querySelector("#selector-model").value;
+        switch (val) {
+            case "paint":
+                break;
+            case "edit-line":
+                mouseMovingEditLineEvent(event);
+                break;
+            // case "square":
+            //     mouseMovingSquareEvent(event);
+            //     break;
+            default:
+                mouseMovingLineEvent(event);
+                break;
+        }
+    });
 
-    bufferId: null,
-    cbufferId: null,
+    canvas.addEventListener("mousedown", function (event) {
+        let val = document.querySelector("#selector-model").value;
+        switch (val) {
+            case "paint":
+                break;
+            case "edit-line":
+                mouseDownEditLineEvent(event);
+                break;
+            // case "square":
+            //     mouseDownSquareEvent(event);
+            //     break;
+            default:
+                mouseDownLineEvent(event);
+                break;
+        }
+    });
 
-    mouseClicked: false,
-    currentColor: [0, 0, 0],
+    canvas.addEventListener("mouseup", function () {
+        let val = document.querySelector("#selector-model").value;
+        switch (val) {
+            case "paint":
+                break;
+            case "edit-line":
+                mouseUpEditLineEvent();
+                break;
+            // case "square":
+            //     mouseUpSquareEvent();
+            //     break;
+            default:
+                mouseUpLineEvent();
+                break;
+        }
+    });
 
-    points: [],
-    colors: [],
-    dots: [],
-    startIdx: [],
-    types: [],
-    mode: "",
-
-    editPointsIdx: -1
+    document.querySelector("#resetBtn").addEventListener("click", function () {
+        clear();
+    });
 }
+
+const main = () => {
+    init();
+    attachEventListener();
+}
+
+window.onload = main;

@@ -1,49 +1,63 @@
-import { threshold } from '../app.js';
-import { lengthDotType } from '../shared/utils.js';
+/* eslint no-console:0 consistent-return:0 */
+"use strict";
 
-import { render, createSquare } from '../shared/utils.js';
+import Shape from './Shape.js';
 
-export const mouseDownSquareEvent = (event, context) => {
-    context.mouseClicked = true;
-    context.mode = "square";
+export default class Square extends Shape {
+    constructor(startPoint, endPoint, color) {
+        super(createSquare(startPoint, endPoint), color);
+    }
 
-    context.types.push(context.mode);
-    context.dots.push(lengthDotType(context.mode));
-    context.startIdx.push(
-        context.startIdx.length > 0 ?
-            context.startIdx[context.startIdx.length - 1] + lengthDotType(context.types[context.types.length - 1])
-            : 0
-    );
+    getShapeType() {
+        return "square";
+    }
+}
+const quadran = (x, y) => {
+    if (x == 1 && y == 1) {
+        return 1;
+    } else if (x == -1 && y == 1) {
+        return 3;
+    } else if (x == -1 && y == -1) {
+        return 2;
+    } else {
+        return 4;
+    }
+}
 
-    let x = -1 + 2 * event.offsetX / context.canvas.width;
-    let y = -1 + 2 * (context.canvas.height - event.offsetY) / context.canvas.height;
+const createSquare = (start, end) => {
+    let delta_x = Math.abs(end[0] - start[0]);
+    let delta_y = Math.abs(end[1] - start[1]);
+    let delta = Math.max(delta_x, delta_y);
 
-    // for start point and last point
+    let beta_x = (end[0] - start[0]) < 0 ? -1 : 1;
+    let beta_y = (end[1] - start[1] > 0) ? -1 : 1;
+
+    delta_x = delta * beta_x;
+    delta_y = delta * beta_y;
+
+    switch (quadran(beta_x, beta_y)) {
+        case 1:
+            return [
+                vec2(start[0], start[1]),
+                vec2(start[0] + delta_x, start[1]),
+                vec2(start[0] + delta_x, start[1] - delta_y),
+                vec2(start[0], start[1] - delta_y)
+            ];
+        default:
+            return [
+                vec2(start[0], start[1]),
+                vec2(start[0], start[1] - delta_y),
+                vec2(start[0] + delta_x, start[1] - delta_y),
+                vec2(start[0] + delta_x, start[1]),
+            ];
+    }
+}
+
+export const createSquareVectorColor = (color) => {
+    colors = []
     for (let i = 0; i < 4; i++) {
-        context.points.push(vec2(x, y));
-    }
-}
-
-export const mouseUpSquareEvent = (context) => {
-    context.mouseClicked = false;
-}
-
-export const mouseMovingSquareEvent = (event, context) => {
-    if (context.mouseClicked && context.mode === "square") {
-        console.log("Square Event Moving");
-        let x = -1 + 2 * event.offsetX / context.canvas.width;
-        let y = -1 + 2 * (context.canvas.height - event.offsetY) / context.canvas.height;
-        let lastIndex = (context.points.length - 4);
-
-        const arrOfPoints = createSquare(context.points[lastIndex], vec2(x, y));
-
-        const [forthPoints, thirdPoints, secondPoints, ...rest] = arrOfPoints.reverse();
-
-        context.points[lastIndex + 1] = secondPoints;
-        context.points[lastIndex + 2] = thirdPoints;
-        context.points[lastIndex + 3] = forthPoints;
-
-        render(context);
+        colors.push([...color]);
     }
 
-}
+    return colors;
+} 

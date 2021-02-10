@@ -6,15 +6,14 @@ import { threshold } from '../shared/constant.js';
 import Line from '../models/line.js';
 
 export const mouseDownLineEvent = (event) => {
+
     const canvas = Context.getInstance().getCanvas();
     const x = -1 + 2 * event.offsetX / canvas.width;
     const y = -1 + 2 * (canvas.height - event.offsetY) / canvas.height;
 
     Context.getInstance().click();
     Context.getInstance().changeMode("line");
-    console.log(Context.getInstance().getColor());
     Context.getInstance().addShape(new Line(vec2(x, y), vec2(x, y), Context.getInstance().getColor()));
-
     render();
 }
 
@@ -31,8 +30,8 @@ export const mouseMovingLineEvent = (event) => {
 
         const lastIndex = Context.getInstance().getShapes().length - 1;
         Context.getInstance().getShapes()[lastIndex].setPoint(vec2(x, y), 1);
-        render();
     }
+    render();
 }
 
 export const mouseDownEditLineEvent = (event) => {
@@ -66,8 +65,6 @@ export const mouseDownEditLineEvent = (event) => {
                 minIdx = idx;
                 nPoint = 1;
             }
-
-
         }
     })
 
@@ -76,9 +73,7 @@ export const mouseDownEditLineEvent = (event) => {
         Context.getInstance()._editShapeIdx = minIdx;
         Context.getInstance()._editShapeControlPointIdx = nPoint;
     }
-
     render();
-
 }
 
 export const mouseUpEditLineEvent = () => {
@@ -98,8 +93,6 @@ export const mouseMovingEditLineEvent = (event) => {
         const y = -1 + 2 * (canvas.height - event.offsetY) / canvas.height;
 
         Context.getInstance().getShapes()[editPointIdx].setPoint(vec2(x, y), Context.getInstance()._editShapeControlPointIdx);
-
-        render();
     }
-
+    render();
 }

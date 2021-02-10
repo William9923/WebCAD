@@ -6,10 +6,16 @@ import Shape from './Shape.js';
 export default class Square extends Shape {
     constructor(startPoint, endPoint, color) {
         super(createSquare(startPoint, endPoint), color);
+        this._startPoint = startPoint;
     }
 
     getShapeType() {
         return "square";
+    }
+
+    setPoint(newPoint, idx) {
+        const startPoint = this._startPoint;
+        this._points = createSquare(startPoint, newPoint);
     }
 }
 const quadran = (x, y) => {
@@ -54,7 +60,7 @@ const createSquare = (start, end) => {
 }
 
 export const createSquareVectorColor = (color) => {
-    colors = []
+    const colors = []
     for (let i = 0; i < 4; i++) {
         colors.push([...color]);
     }

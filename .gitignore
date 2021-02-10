@@ -5,3 +5,5 @@ release
 node_modules
 elm.js
 documentation.json
+
+.vscode

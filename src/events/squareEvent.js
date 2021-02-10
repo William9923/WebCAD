@@ -3,7 +3,7 @@ import { Context } from '../models/Context.js';
 import { render } from '../shared/utils.js';
 import { euclidianDistance } from '../shared/math.js';
 import { threshold } from '../shared/constant.js';
-import Square from '../models/Square.js';
+import Square, { findCrossPoint } from '../models/Square.js';
 
 export const mouseDownSquareEvent = (event) => {
 
@@ -66,8 +66,8 @@ export const mouseDownEditSquareEvent = (event) => {
         const square = Context.getInstance().getShapes()[minIdx];
         Context.getInstance().getShapes().splice(minIdx, 1);
         Context.getInstance().getShapes().push(square);
-        const movePoint = square.getPoints()[nPoint];
-        const balancePoint = square.getPoints().filter(points => points[0] != movePoint[0] && points[1] != movePoint[1])[0];
+
+        const balancePoint = findCrossPoint(square.getPoints(), square.getPoints()[nPoint]);
         Context.getInstance()._editShapeControlPointIdx = balancePoint;
     }
 
@@ -90,7 +90,7 @@ export const mouseMovingEditSquareEvent = (event) => {
         const lastIdx = Context.getInstance().getShapes().length - 1;
 
         console.log(Context.getInstance().getShapes()[lastIdx]);
-        Context.getInstance().getShapes()[lastIdx] = new Square(Context.getInstance()._editShapeControlPointIdx, vec2(x, y),Context.getInstance().getColor())
+        Context.getInstance().getShapes()[lastIdx] = new Square(Context.getInstance()._editShapeControlPointIdx, vec2(x, y), Context.getInstance().getColor())
         console.log(Context.getInstance().getShapes()[lastIdx]);
         render();
     }

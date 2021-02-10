@@ -10,7 +10,9 @@ import { mouseDownEditLineEvent, mouseUpEditLineEvent, mouseMovingEditLineEvent 
 import { mouseDownSquareEvent, mouseMovingSquareEvent, mouseUpSquareEvent } from './events/squareEvent.js';
 import { mouseDownEditSquareEvent, mouseMovingEditSquareEvent, mouseUpEditSquareEvent } from './events/squareEvent.js';
 
-import { clear } from './shared/utils.js';
+import { clear, render, parseImport, prepareExport } from './shared/utils.js';
+
+let file = null;
 
 const attachEventListener = () => {
     const canvas = Context.getInstance().getCanvas();
@@ -32,7 +34,7 @@ const attachEventListener = () => {
                 mouseMovingLineEvent(event);
                 break;
         }
-        
+
     });
 
     canvas.addEventListener("mousedown", function (event) {
@@ -79,6 +81,41 @@ const attachEventListener = () => {
     document.querySelector("#resetBtn").addEventListener("click", function () {
         clear();
     });
+
+    document.querySelector("#file-import").addEventListener("change", function (event) {
+        file = event.target.files[0];
+
+        if (!file) {
+            alert("File is not supported for this web application");
+            return;
+        }
+
+        const reader = new FileReader();
+        reader.onload = (event) => {
+            const content = event.target.result;
+            parseImport(content);
+            render();
+        }
+        reader.onerror = (e) => {
+            const error = e.target.error;
+            console.error(`Error occured while reading ${file.name}`, error);
+            alert("File is not supported for this web application");
+        }
+        reader.readAsText(file)
+    });
+
+    document.querySelector("#exportBtn").addEventListener('click', function () {
+        const data = "data:text/json;charset=utf-8," + encodeURIComponent(prepareExport());
+
+        let downloadAnchorNode = document.createElement('a');
+        downloadAnchorNode.setAttribute("href", data);
+        downloadAnchorNode.setAttribute("download", "Testing" + ".json");
+
+        document.body.appendChild(downloadAnchorNode); // required for firefox
+        downloadAnchorNode.click();
+        downloadAnchorNode.remove();
+
+    })
 }
 
 const main = () => {

@@ -113,7 +113,3 @@ export class Context {
     }
 
 }
-
-class ExportedContext {
-
-}

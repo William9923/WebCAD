@@ -7,10 +7,7 @@ export default class Square extends Shape {
     constructor(startPoint, endPoint, color) {
         super(createSquare(startPoint, endPoint), color);
         this._startPoint = startPoint;
-    }
-
-    getShapeType() {
-        return "square";
+        this._type = "square";
     }
 
     setPoint(newPoint, idx) {
@@ -67,3 +64,7 @@ export const createSquareVectorColor = (color) => {
 
     return colors;
 } 
+
+export const findCrossPoint = (points, start) => {
+    return points.filter(point => point[0] != start[0] && point[1] != start[1])[0];
+}

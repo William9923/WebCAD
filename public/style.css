@@ -1,0 +1,32 @@
+:root {
+    --primary: #f875aa;
+    --ascent: #f1d1d0;
+    --border-color: #fbaccc;
+    --canvas-color:#f4f9f9;
+}
+
+body {
+    background-color: var(--primary);
+}
+canvas {
+    background-color: var(--canvas-color);
+}
+
+.btn-flex-wrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+} 
+
+.container {
+    display:flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+.centered {
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+    text-align: center;
+}

@@ -1,90 +1,5 @@
-/* eslint no-console:0 consistent-return:0 */
-"use strict";
-
-import {
-    fragmentScriptId,
-    colorAttr, positionalAttr,
-    vertexScriptId
-} from '../app.js';
-
-const maxNumberOfPoints = 20000000;
-
-export const init = (context) => {
-
-    let canvas = document.getElementById("glCanvas");
-    let gl = WebGLUtils.setupWebGL(canvas);
-
-    // Checking if web gl initialize in the user browser
-    if (!gl) {
-        alert("Unable to initialize WebGL. User browser currently not supporting web gl");
-        return;
-    }
-    // configure Web GL 
-    //  Configure WebGL
-    gl.viewport(0, 0, canvas.width, canvas.height);
-    gl.clearColor(1.0, 1.0, 1.0, 1.0);
-
-    let program = initShaders(gl, vertexScriptId, fragmentScriptId)
-
-    gl.useProgram(program);
-
-    // Vertex buffer
-    let bufferId = gl.createBuffer();
-    gl.bindBuffer(gl.ARRAY_BUFFER, bufferId);
-    gl.bufferData(gl.ARRAY_BUFFER, 8 * maxNumberOfPoints, gl.STATIC_DRAW);
-    let vPosition = gl.getAttribLocation(program, positionalAttr);
-    gl.vertexAttribPointer(vPosition, 2, gl.FLOAT, false, 0, 0);
-    gl.enableVertexAttribArray(vPosition);
-
-    // Color buffer
-    let cbufferId = gl.createBuffer();
-    gl.bindBuffer(gl.ARRAY_BUFFER, cbufferId);
-    gl.bufferData(gl.ARRAY_BUFFER, 8 * maxNumberOfPoints, gl.STATIC_DRAW);
-    let vColor = gl.getAttribLocation(program, colorAttr);
-    gl.vertexAttribPointer(vColor, 3, gl.FLOAT, false, 0, 0);
-    gl.enableVertexAttribArray(vColor);
-
-    context.cbufferId = cbufferId;
-    context.bufferId = bufferId;
-    context.canvas = canvas;
-    context.gl = gl;
-}
-
-const createShader = (gl, type, source) => {
-    let shader = gl.createShader(type);
-
-    gl.shaderSource(shader, source);
-    gl.compileShader(shader);
-
-    const success = gl.getShaderParameter(shader, gl.COMPILE_STATUS);
-
-    if (success) {
-        return shader;
-    }
-
-    console.log(gl.getShaderInfoLog(shader));
-    gl.deleteShader(shader);
-}
-
-const loadSource = (id) => document.querySelector(`#${id}`).text;
-
-const createProgram = (gl, vertexShader, fragmentShader) => {
-    let program = gl.createProgram();
-
-    gl.attachShader(program, vertexShader);
-    gl.attachShader(program, fragmentShader);
-
-    gl.linkProgram(program);
-
-    const success = gl.getProgramParameter(program, gl.LINK_STATUS);
-
-    if (success) {
-        return program;
-    }
-
-    console.log(gl.getProgramLogInfo(program));
-    gl.deleteProgram(program);
-}
+import { Context } from '../models/Context.js';
+import { colorAttr, fragmentScriptId, vertexScriptId, positionalAttr, maxNumberOfPoints } from '../shared/constant.js';
 
 const initShaders = (gl, vertexShaderId, fragmentShaderId) => {
     var vertShdr;
@@ -139,4 +54,45 @@ const initShaders = (gl, vertexShaderId, fragmentShaderId) => {
     return program;
 }
 
+export const init = () => {
+
+    let canvas = document.getElementById("glCanvas");
+    let gl = WebGLUtils.setupWebGL(canvas);
+
+    // Checking if web gl initialize in the user browser
+    if (!gl) {
+        alert("Unable to initialize WebGL. User browser currently not supporting web gl");
+        return;
+    }
+    // configure Web GL 
+    //  Configure WebGL
+    gl.viewport(0, 0, canvas.width, canvas.height);
+    gl.clearColor(1.0, 1.0, 1.0, 1.0);
+
+    let program = initShaders(gl, vertexScriptId, fragmentScriptId)
+
+    gl.useProgram(program);
+
+    // Vertex buffer
+    let bufferId = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, bufferId);
+    gl.bufferData(gl.ARRAY_BUFFER, 8 * maxNumberOfPoints, gl.STATIC_DRAW);
+    let vPosition = gl.getAttribLocation(program, positionalAttr);
+    gl.vertexAttribPointer(vPosition, 2, gl.FLOAT, false, 0, 0);
+    gl.enableVertexAttribArray(vPosition);
+
+    // Color buffer
+    let cbufferId = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, cbufferId);
+    gl.bufferData(gl.ARRAY_BUFFER, 8 * maxNumberOfPoints, gl.STATIC_DRAW);
+    let vColor = gl.getAttribLocation(program, colorAttr);
+    gl.vertexAttribPointer(vColor, 3, gl.FLOAT, false, 0, 0);
+    gl.enableVertexAttribArray(vColor);
+
+    /* setup context */
+    Context.getInstance().setCanvas(canvas);
+    Context.getInstance().setCBufferId(cbufferId);
+    Context.getInstance().setGl(gl);
+    Context.getInstance().setBufferId(bufferId);
+}
 

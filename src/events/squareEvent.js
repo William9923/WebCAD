@@ -30,5 +30,68 @@ export const mouseMovingSquareEvent = (event) => {
         Context.getInstance().addShape(new Square(lastShape.getPoints()[0], vec2(x, y), Context.getInstance().getColor()));
         render();
     }
-    
+}
+
+
+export const mouseDownEditSquareEvent = (event) => {
+
+    const canvas = Context.getInstance().getCanvas();
+    const x = -1 + 2 * event.offsetX / canvas.width;
+    const y = -1 + 2 * (canvas.height - event.offsetY) / canvas.height;
+
+    Context.getInstance().click();
+    Context.getInstance().changeMode("edit-square");
+
+    let minIdx = -1;
+    let min = 999;
+    let nPoint = -1;
+
+    const shapes = Context.getInstance().getShapes();
+    shapes.forEach((shape, idx) => {
+        if (shape.getShapeType() === "square") {
+            const points = shape.getPoints();
+            for (let i = 0; i < points.length; i++) {
+                const distance = euclidianDistance(points[i], vec2(x, y));
+                if (distance < min && distance < threshold) {
+                    min = distance;
+                    minIdx = idx;
+                    nPoint = i;
+                }
+            }
+        }
+    });
+
+    // threshold passed, found target
+    if (minIdx != -1 && min != 999) {
+        const square = Context.getInstance().getShapes()[minIdx];
+        Context.getInstance().getShapes().splice(minIdx, 1);
+        Context.getInstance().getShapes().push(square);
+        const movePoint = square.getPoints()[nPoint];
+        const balancePoint = square.getPoints().filter(points => points[0] != movePoint[0] && points[1] != movePoint[1])[0];
+        Context.getInstance()._editShapeControlPointIdx = balancePoint;
+    }
+
+}
+
+export const mouseUpEditSquareEvent = () => {
+    Context.getInstance().releaseClick();
+    Context.getInstance()._editShapeControlPointIdx = -1;
+    render();
+}
+
+export const mouseMovingEditSquareEvent = (event) => {
+
+    const mode = Context.getInstance().getMode();
+    if (Context.getInstance().isClicked() && mode === "edit-square" && Context.getInstance()._editShapeControlPointIdx != -1) {
+        const canvas = Context.getInstance().getCanvas();
+        const x = -1 + 2 * event.offsetX / canvas.width;
+        const y = -1 + 2 * (canvas.height - event.offsetY) / canvas.height;
+
+        const lastIdx = Context.getInstance().getShapes().length - 1;
+
+        console.log(Context.getInstance().getShapes()[lastIdx]);
+        Context.getInstance().getShapes()[lastIdx] = new Square(Context.getInstance()._editShapeControlPointIdx, vec2(x, y),Context.getInstance().getColor())
+        console.log(Context.getInstance().getShapes()[lastIdx]);
+        render();
+    }
 }

@@ -70,7 +70,9 @@ export const mouseDownEditLineEvent = (event) => {
 
     // threshold passed, found target
     if (minIdx != -1 && min != 999) {
-        Context.getInstance()._editShapeIdx = minIdx;
+        const line = Context.getInstance().getShapes()[minIdx];
+        Context.getInstance().getShapes().splice(minIdx,1);
+        Context.getInstance().getShapes().push(line);
         Context.getInstance()._editShapeControlPointIdx = nPoint;
     }
     
@@ -85,14 +87,13 @@ export const mouseUpEditLineEvent = () => {
 export const mouseMovingEditLineEvent = (event) => {
 
     const mode = Context.getInstance().getMode();
-    const editPointIdx = Context.getInstance()._editShapeIdx;
 
-    if (Context.getInstance().isClicked() && editPointIdx != -1 && mode === "edit-line") {
+    if (Context.getInstance().isClicked() && mode === "edit-line") {
         const canvas = Context.getInstance().getCanvas();
         const x = -1 + 2 * event.offsetX / canvas.width;
         const y = -1 + 2 * (canvas.height - event.offsetY) / canvas.height;
-
-        Context.getInstance().getShapes()[editPointIdx].setPoint(vec2(x, y), Context.getInstance()._editShapeControlPointIdx);
+        const lastIdx = Context.getInstance().getShapes().length - 1;
+        Context.getInstance().getShapes()[lastIdx].setPoint(vec2(x, y), Context.getInstance()._editShapeControlPointIdx);
         render();
     }
     

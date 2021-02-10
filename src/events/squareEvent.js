@@ -14,7 +14,6 @@ export const mouseDownSquareEvent = (event) => {
     Context.getInstance().click();
     Context.getInstance().changeMode("square");
     Context.getInstance().addShape(new Square(vec2(x, y), vec2(x, y), Context.getInstance().getColor()));
-    render();
 }
 
 export const mouseUpSquareEvent = () => {
@@ -22,14 +21,14 @@ export const mouseUpSquareEvent = () => {
     render();
 }
 
-export const mouseMovingSquareEvent = (event, context) => {
+export const mouseMovingSquareEvent = (event) => {
     if (Context.getInstance().isClicked() && Context.getInstance().getMode() === "square") {
-
         const canvas = Context.getInstance().getCanvas();
         const x = -1 + 2 * event.offsetX / canvas.width;
         const y = -1 + 2 * (canvas.height - event.offsetY) / canvas.height;
         const lastShape = Context.getInstance().getShapes().pop();
         Context.getInstance().addShape(new Square(lastShape.getPoints()[0], vec2(x, y), Context.getInstance().getColor()));
+        render();
     }
-    render();
+    
 }

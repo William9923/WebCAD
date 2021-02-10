@@ -22,7 +22,10 @@ const createStartIdx = () => {
     const startIdx = [0];
     const shapes = Context.getInstance().getShapes();
     for (let i = 0; i < shapes.length - 1; i++) {
-        startIdx.push(startIdx[i] + shapes[i + 1].getNDots());
+        startIdx.push(startIdx[i] + shapes[i].getNDots());
+    }
+    if (shapes.length === 0) {
+        startIdx.pop();
     }
     return startIdx;
 }
@@ -54,7 +57,12 @@ export const render = () => {
     const colors = createColors();
     const startIdx = createStartIdx();
 
-
+    console.log("Dots : ");
+    console.log(dots);
+    console.log("Points : ");
+    console.log(points);
+    console.log("StartIdx");
+    console.log(startIdx);
     let gl = Context.getInstance().getGl();
 
     gl.clear(gl.COLOR_BUFFER_BIT);

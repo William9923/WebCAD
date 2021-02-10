@@ -1,42 +1,62 @@
-export const clear = (context) => {
+import { Context } from '../models/Context.js';
+import Line, { createLineVectorColor } from '../models/Line.js';
+import Square, { createSquareVectorColor } from '../models/Square.js';
 
-    context.mouseClicked = false;
-
-    context.points = [];
-    context.colors = [];
-    context.dots = [];
-    context.startIdx = [];
-    context.types = [];
-    context.mode = "";
-
-    context.editPointsIdx = -1;
-    render(context);
+export const clear = () => {
+    Context.getInstance().reset();
+    render();
 }
 
-export const lengthDotType = (type) => {
-    switch (type) {
-        case "line": return 2;
-        case "square": return 4;
-        case "polygon": return 5;
+const createDots = () => Context.getInstance().getShapes().map(shape => shape.getNDots());
+
+const createPoints = () => {
+    const shapes = Context.getInstance().getShapes();
+    const points = [];
+    shapes.forEach(shape => {
+        points.push(...shape.getPoints())
+    });
+    return points;
+}
+
+const createStartIdx = () => {
+    const startIdx = [0];
+    const shapes = Context.getInstance().getShapes();
+    for (let i = 0; i < shapes.length - 1; i++) {
+        startIdx.push(startIdx[i] + shapes[i + 1].getNDots());
     }
+    return startIdx;
 }
 
+const createColors = () => {
+    const shapes = Context.getInstance().getShapes();
+    const colors = [];
+    shapes.forEach(shape => {
+        switch (shape.getShapeType()) {
+            case "line":
+                colors.push(...createLineVectorColor(shape.getColor()));
+                break;
+            case "square":
+                colors.push(...createSquareVectorColor(shape.getColor()));
+                break;
+        }
+    });
+    return colors;
+}
 
-// const createLine = (begin, end, lineWidth) => {
-//     // get initial and final pts on a line, return rectangle with width
-//     var width = lineWidth * 0.001;
-//     var beta = (Math.PI / 2.0) - Math.atan2(end[1] - begin[1], end[0] - begin[0]);
-//     var delta_x = Math.cos(beta) * width;
-//     var delta_y = Math.sin(beta) * width;
-//     return [vec2(begin[0] - delta_x, begin[1] + delta_y),
-//     vec2(begin[0] + delta_x, begin[1] - delta_y),
-//     vec2(end[0] + delta_x, end[1] - delta_y),
-//     vec2(end[0] - delta_x, end[1] + delta_y)];
-// }
+export const render = () => {
 
-export const render = (context) => {
+    const bufferId = Context.getInstance().getBufferId();
+    const cbufferId = Context.getInstance().getCBufferId();
+    const shapes = Context.getInstance().getShapes();
 
-    let { bufferId, cbufferId, dots, points, colors, gl, types, startIdx } = context;
+    const dots = createDots();
+    const points = createPoints();
+    const colors = createColors();
+    const startIdx = createStartIdx();
+
+
+    let gl = Context.getInstance().getGl();
+
     gl.clear(gl.COLOR_BUFFER_BIT);
 
     gl.bindBuffer(gl.ARRAY_BUFFER, cbufferId);
@@ -44,56 +64,24 @@ export const render = (context) => {
     gl.bindBuffer(gl.ARRAY_BUFFER, bufferId);
     gl.bufferSubData(gl.ARRAY_BUFFER, 0, flatten(points));
 
-    for (let i = 0; i < types.length; i++) {
-        if (types[i] === "line") {
-            gl.drawArrays(gl.LINES, startIdx[i], dots[i]);
-        } else if (types[i] === "square") {
-            gl.drawArrays(gl.TRIANGLE_FAN, startIdx[i], dots[i]);
+    /* Validate */
+    if (colors.length != points.length) {
+        throw new Error("Colors and Points length not matched");
+    }
+
+    if (dots.length != startIdx.length) {
+        throw new Error("Dots and startIdx length not matched");
+    }
+
+    /* Draw the shapes */
+    shapes.forEach((shape, idx) => {
+        switch (shape.getShapeType()) {
+            case "line":
+                gl.drawArrays(gl.LINES, startIdx[idx], dots[idx]);
+                break;
+            case "square":
+                gl.drawArrays(gl.TRIANGLE_FAN, startIdx[idx], dots[idx]);
+                break;
         }
-    }
-    context.gl = gl;
+    })
 }
-
-const quadran = (x, y) => {
-    if (x == 1 && y == 1) {
-        return 1;
-    } else if (x == -1 && y == 1) {
-        return 3;
-    } else if (x == -1 && y == -1) {
-        return 2;
-    } else {
-        return 4;
-    }
-
-}
-
-export const createSquare = (start, end) => {
-    let delta_x = Math.abs(end[0] - start[0]);
-    let delta_y = Math.abs(end[1] - start[1]);
-    let delta = Math.max(delta_x, delta_y);
-
-    let beta_x = (end[0] - start[0]) < 0 ? -1 : 1;
-    let beta_y = (end[1] - start[1] > 0) ? -1 : 1;
-
-    delta_x = delta * beta_x;
-    delta_y = delta * beta_y;
-
-    switch (quadran(beta_x, beta_y)) {
-        case 1:
-            return [
-                vec2(start[0], start[1]),
-                vec2(start[0] + delta_x, start[1]),
-                vec2(start[0] + delta_x, start[1] - delta_y),
-                vec2(start[0], start[1] - delta_y)
-            ];
-        default:
-            return [
-                vec2(start[0], start[1]),
-                vec2(start[0], start[1] - delta_y),
-                vec2(start[0] + delta_x, start[1] - delta_y),
-                vec2(start[0] + delta_x, start[1]),
-            ];
-    }
-}
-
-export const createPolygon = () => { }

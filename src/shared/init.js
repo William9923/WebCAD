@@ -12,7 +12,17 @@ const initShaders = (gl, vertexShaderId, fragmentShaderId) => {
     }
     else {
         vertShdr = gl.createShader(gl.VERTEX_SHADER);
-        gl.shaderSource(vertShdr, vertElem.text);
+        var vertCode =
+            'attribute vec4 vPosition;' +
+            'attribute vec4 vColor;' +
+            'varying vec4 fColor;' +
+            'void main() {' +
+               ' gl_Position = vPosition;' +
+               'fColor = vColor;'+
+               'gl_PointSize = 10.0;'+
+            '}';
+        
+        gl.shaderSource(vertShdr, vertCode);
         gl.compileShader(vertShdr);
         if (!gl.getShaderParameter(vertShdr, gl.COMPILE_STATUS)) {
             var msg = "Vertex shader failed to compile.  The error log is:"

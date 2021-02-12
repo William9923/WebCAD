@@ -78,9 +78,11 @@ export const render = () => {
     shapes.forEach((shape, idx) => {
         switch (shape.getShapeType()) {
             case "line":
+                if (Context.getInstance().getMode()=="edit-line") gl.drawArrays(gl.POINTS, startIdx[idx], dots[idx]);
                 gl.drawArrays(gl.LINES, startIdx[idx], dots[idx]);
                 break;
             case "square":
+                if (Context.getInstance().getMode()=="edit-square") gl.drawArrays(gl.POINTS, startIdx[idx], dots[idx]);
                 gl.drawArrays(gl.TRIANGLE_FAN, startIdx[idx], dots[idx]);
                 break;
         }

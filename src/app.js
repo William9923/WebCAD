@@ -78,6 +78,14 @@ const attachEventListener = () => {
 
     });
 
+    document.querySelector("#selector-model").addEventListener("change", function() {
+        let val = document.querySelector("#selector-model").value;
+        Context.getInstance().changeMode(val);
+        // console.log(Context.getInstance().getMode());
+
+        render();
+    });
+
     document.querySelector("#resetBtn").addEventListener("click", function () {
         clear();
     });

@@ -38,10 +38,32 @@
                     </select>
                 </center>
             </div>
+            <div class="col s12" style="margin-bottom: -15px;">
+                <center>
+                <div style="height: 10px;"></div>
+                <button id="modalBtn" class="btn btn-sm btn-primary shadow p-2 px-3 popup-trigger">Help</button>
+
+                <div id="simpleModal" class="modal-overlay">
+                    <div class="modal-content">
+                    <div class="modal-header">
+                        <span class="closeBtn">x</span>
+                        <h5 id="judul">Pilih Opsi Aksi (actions)</h5>
+                    </div>
+                    <div style="margin-right: 20px;" class="modal-body">
+                        <!-- <p>Hello</p> -->
+                        <div style="height: 15px;"></div>
+                        <h6 style="font-size: medium;" id="isi">Pilih Opsi Tools Menggambar Denah</h6>
+                        <div style="height: 30px;"></div>
+                    </div>
+                    </div>
+                </center>
+                </div>
+            </div>
             <div class="col s12">
                 <center>
                     <span class="flow-text black-text"><strong>Colors : </strong></span><br>
                     <input id="color-input" type="color" value="#000002">
+                    <div style="height: 10px;"></div>
                 </center>
             </div>
         </div>
@@ -100,6 +122,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js">
     </script>
     <script type="text/javascript" src="./public/flatten.js"></script>
+    <script type="text/javascript" src="./public/popup.js"></script>
     <script type="text/javascript" src="./public/initShaders.js"></script>
     <script type="text/javascript" src="./public/MV.js"></script>
     <script type="text/javascript" src="./public/webgl-utils.js"></script>

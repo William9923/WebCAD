@@ -85,6 +85,10 @@ export const render = () => {
                 if (Context.getInstance().getMode()=="edit-square") gl.drawArrays(gl.POINTS, startIdx[idx], dots[idx]);
                 gl.drawArrays(gl.TRIANGLE_FAN, startIdx[idx], dots[idx]);
                 break;
+            case "polygon":
+                if (Context.getInstance().getMode()=="edit-polygon") gl.drawArrays(gl.POINTS, startIdx[idx], dots[idx]);
+                gl.drawArrays(gl.TRIANGLE_FAN, startIdx[idx], dots[idx]);
+                break;
         }
     })
 }

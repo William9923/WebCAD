@@ -22,6 +22,8 @@ export class Context {
         this._shapes = [];
 
         this._currentColor = [0, 0, 0];
+        this._polygonFinished = false;
+        this._nPolygon = 0;
     }
 
     reset() {
@@ -30,6 +32,8 @@ export class Context {
         // editing context
         this._editShapeIdx = -1;
         this._editShapeControlPointIdx = -1;
+        this._polygonFinished = false;
+        this._nPolygon = 0;
     }
 
     static getInstance() {
@@ -112,4 +116,19 @@ export class Context {
         this._mode = mode;
     }
 
+    finishPolygon() {
+        this._polygonFinished = true;
+    }
+
+    isPolygonFinished() {
+        return this._polygonFinished;
+    }
+
+    addPolygonVertex() {
+        this._nPolygon++;
+    }
+
+    getPolygonVertex() {
+        return this._nPolygon;
+    }
 }

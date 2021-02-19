@@ -139,4 +139,10 @@ export class Context {
     getPolygonVertices() {
         return this._arrPolygonVertices;
     }
+
+    flushPolygon() {
+        this._nPolygon = 0;
+        this._arrPolygonVertices = [];
+        this._polygonFinished = false;
+    }
 }

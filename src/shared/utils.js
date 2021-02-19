@@ -1,7 +1,7 @@
 import { Context } from '../models/Context.js';
 import Line, { createLineVectorColor } from '../models/Line.js';
-import Polygon from '../models/polygon.js';
 import Square, { createSquareVectorColor, findCrossPoint } from '../models/Square.js';
+import Polygon, { createPolygonVectorColor } from '../models/polygon.js';
 
 export const clear = () => {
     Context.getInstance().reset();
@@ -43,7 +43,7 @@ const createColors = () => {
                 colors.push(...createSquareVectorColor(shape.getColor()));
                 break;
             case "polygon":
-                colors.push(...createPolygonVectorColor(shape.getColor()));
+                colors.push(...createPolygonVectorColor(shape.getArrayOfPoints(), shape.getColor()));
                 break;
         }
     });

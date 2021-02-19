@@ -79,12 +79,14 @@ export const mouseDownPolygonEvent = (event) => {
             Context.getInstance().addPolygonVertex(vec2(x,y));
         }
     } else { // If finished, then pop all of the lines and draw the polygon
-        for (var i = 1; i <= Context.getInstance().getNPolygon(); i++) {
+        for (var i = 1; i < Context.getInstance().getNPolygon(); i++) {
             Context.getInstance().getShapes().pop();
         }
         // fetch vertices and color, push polygon to shape array
         let arrVertices = Context.getInstance().getPolygonVertices();
         Context.getInstance().addShape(new Polygon(arrVertices, Context.getInstance().getColor()));
+        // flush all polygon
+        Context.getInstance().flushPolygon();
     }
 }
 

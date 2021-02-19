@@ -22,8 +22,11 @@ export class Context {
         this._shapes = [];
 
         this._currentColor = [0, 0, 0];
+
+        // polygon data
         this._polygonFinished = false;
-        this._nPolygon = 0;
+        this._nPolygon = 0; // How many vertices
+        this._arrPolygonVertices = []; // list of vertices
     }
 
     reset() {
@@ -124,11 +127,16 @@ export class Context {
         return this._polygonFinished;
     }
 
-    addPolygonVertex() {
+    addPolygonVertex(point) {
         this._nPolygon++;
+        this._arrPolygonVertices.push(point);
     }
 
-    getPolygonVertex() {
+    getNPolygon() {
         return this._nPolygon;
+    }
+
+    getPolygonVertices() {
+        return this._arrPolygonVertices;
     }
 }

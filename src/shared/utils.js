@@ -1,5 +1,6 @@
 import { Context } from '../models/Context.js';
 import Line, { createLineVectorColor } from '../models/Line.js';
+import Polygon from '../models/polygon.js';
 import Square, { createSquareVectorColor, findCrossPoint } from '../models/Square.js';
 
 export const clear = () => {
@@ -108,7 +109,8 @@ export const parseImport = (text) => {
             case "square" :
                 Context.getInstance().addShape(new Square(shape._points[0], findCrossPoint(shape._points, shape._points[0]), shape._color));
                 break;
-            // add polygon
+            case "polygon" :
+                Context.getInstance().addShape(new Polygon(shape._points, shape._color));
         }
     })
     render();

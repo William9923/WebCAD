@@ -140,6 +140,10 @@ export class Context {
         return this._arrPolygonVertices;
     }
 
+    popPolygonVertex() {
+        this._arrPolygonVertices.pop();
+    }
+
     flushPolygon() {
         this._nPolygon = 0;
         this._arrPolygonVertices = [];

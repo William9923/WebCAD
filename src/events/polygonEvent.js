@@ -51,9 +51,6 @@ export const mouseDownPolygonEvent = (event) => {
         let nPolygon = Context.getInstance().getNPolygon();
         // Get the first point in the polygon
         let firstPoint = Context.getInstance().getShapes()[lenShapes - nPolygon + 1].getPoints()[0];
-
-        console.log(Context.getInstance().getPolygonVertices());
-        console.log(firstPoint);
     
         // threshold passed, found target
         if (minIdx != -1 && min != 999) {
@@ -61,7 +58,6 @@ export const mouseDownPolygonEvent = (event) => {
             curPoint = Context.getInstance().getShapes()[minIdx].getPoints()[0];
             // if equals the first point of the line, then polygon complete.
             if (curPoint[0] === firstPoint[0] && curPoint[1] === firstPoint[1]) {
-                console.log("IWAW MASHOK");
                 Context.getInstance().finishPolygon();
             }
         }
@@ -82,12 +78,15 @@ export const mouseDownPolygonEvent = (event) => {
         for (var i = 1; i < Context.getInstance().getNPolygon(); i++) {
             Context.getInstance().getShapes().pop();
         }
+        // removes the last point
+        Context.getInstance().popPolygonVertex();
         // fetch vertices and color, push polygon to shape array
         let arrVertices = Context.getInstance().getPolygonVertices();
         Context.getInstance().addShape(new Polygon(arrVertices, Context.getInstance().getColor()));
         // flush all current polygon data
         Context.getInstance().flushPolygon();
     }
+    console.log(Context.getInstance().getPolygonVertices());
 }
 
 export const mouseUpPolygonEvent = () => {
@@ -103,6 +102,7 @@ export const mouseUpPolygonEvent = () => {
     Context.getInstance().changeMode("line");
     Context.getInstance().addShape(new Line(nextVertex, nextVertex, Context.getInstance().getColor()));
     render();
+    console.log(Context.getInstance().getPolygonVertices());
 }
 
 export const mouseMovingPolygonEvent = (event) => {

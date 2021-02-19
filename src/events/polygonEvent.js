@@ -85,7 +85,7 @@ export const mouseDownPolygonEvent = (event) => {
         // fetch vertices and color, push polygon to shape array
         let arrVertices = Context.getInstance().getPolygonVertices();
         Context.getInstance().addShape(new Polygon(arrVertices, Context.getInstance().getColor()));
-        // flush all polygon
+        // flush all current polygon data
         Context.getInstance().flushPolygon();
     }
 }
@@ -116,6 +116,65 @@ export const mouseMovingPolygonEvent = (event) => {
         const y = -1 + 2 * (canvas.height - event.offsetY) / canvas.height;
         const lastIndex = Context.getInstance().getShapes().length - 1;
         Context.getInstance().getShapes()[lastIndex].setPoint(vec2(x, y), 1);
+        render();
+    }
+}
+
+export const mouseDownEditPolygonEvent = (event) => {
+
+    const canvas = Context.getInstance().getCanvas();
+    const x = -1 + 2 * event.offsetX / canvas.width;
+    const y = -1 + 2 * (canvas.height - event.offsetY) / canvas.height;
+
+    Context.getInstance().click();
+    Context.getInstance().changeMode("edit-poly");
+
+    let minIdx = -1;
+    let min = 999;
+    let nPoint = -1;
+
+    const shapes = Context.getInstance().getShapes();
+    shapes.forEach((shape, idx) => {
+        if (shape.getShapeType() === "polygon") {
+            const points = shape.getPoints();
+            for (let i = 0; i < points.length; i++) {
+                const distance = euclidianDistance(points[i], vec2(x, y));
+                if (distance < min && distance < threshold) {
+                    min = distance;
+                    minIdx = idx;
+                    nPoint = i;
+                }
+            }
+        }
+    });
+
+    // threshold passed, found target
+    if (minIdx != -1 && min != 999) {
+        const polygon = Context.getInstance().getShapes()[minIdx];
+        Context.getInstance().getShapes().splice(minIdx, 1);
+        Context.getInstance().getShapes().push(polygon);
+        Context.getInstance()._editShapeControlPointIdx = nPoint;
+    }
+
+}
+
+export const mouseUpEditPolygonEvent = () => {
+    Context.getInstance().releaseClick();
+    Context.getInstance()._editShapeControlPointIdx = -1;
+    render();
+}
+
+export const mouseMovingEditPolygonEvent = (event) => {
+
+    const mode = Context.getInstance().getMode();
+    if (Context.getInstance().isClicked() && mode === "edit-poly" && Context.getInstance()._editShapeControlPointIdx != -1) {
+        const canvas = Context.getInstance().getCanvas();
+        const x = -1 + 2 * event.offsetX / canvas.width;
+        const y = -1 + 2 * (canvas.height - event.offsetY) / canvas.height;
+
+        const lastIdx = Context.getInstance().getShapes().length - 1;
+
+        Context.getInstance().getShapes()[lastIdx].updateVertexIdx(vec2(x,y), Context.getInstance()._editShapeControlPointIdx);
         render();
     }
 }

@@ -6,13 +6,16 @@ import Shape from './Shape.js';
 export default class Polygon extends Shape {
     constructor(arrayOfPoints, color) {
         super(createPolygon(arrayOfPoints), color);
-        this._arr = arrayOfPoints;
         this._color = color;
         this._type = "polygon";
     }
 
     getArrayOfPoints() {
-        return this._arr;
+        return this._points;
+    }
+
+    updateVertexIdx(newVert, idx) {
+        this._points[idx] = newVert;
     }
 }
 

@@ -32,7 +32,6 @@ export const mouseMovingSquareEvent = (event) => {
     }
 }
 
-
 export const mouseDownEditSquareEvent = (event) => {
 
     const canvas = Context.getInstance().getCanvas();

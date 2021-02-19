@@ -11,6 +11,7 @@ import { mouseDownSquareEvent, mouseMovingSquareEvent, mouseUpSquareEvent } from
 import { mouseDownEditSquareEvent, mouseMovingEditSquareEvent, mouseUpEditSquareEvent } from './events/squareEvent.js';
 
 import { mouseDownPolygonEvent, mouseMovingPolygonEvent, mouseUpPolygonEvent } from './events/polygonEvent.js';
+import { mouseDownEditPolygonEvent, mouseMovingEditPolygonEvent, mouseUpEditPolygonEvent } from './events/polygonEvent.js';
 
 import { clear, render, parseImport, prepareExport } from './shared/utils.js';
 
@@ -34,6 +35,9 @@ const attachEventListener = () => {
                 break;
             case "poly":
                 mouseMovingPolygonEvent(event);
+                break;
+            case "edit-poly":
+                mouseMovingEditPolygonEvent(event);
                 break;
             default:
                 mouseMovingLineEvent(event);
@@ -59,6 +63,9 @@ const attachEventListener = () => {
             case "poly":
                 mouseDownPolygonEvent(event);
                 break;
+            case "edit-poly":
+                mouseDownEditPolygonEvent(event);
+                break;
             default:
                 mouseDownLineEvent(event);
                 break;
@@ -80,6 +87,9 @@ const attachEventListener = () => {
                 mouseUpEditSquareEvent();
                 break;
             case "poly":
+                mouseUpPolygonEvent();
+                break;
+            case "edit-poly":
                 mouseUpPolygonEvent();
                 break;
             default:

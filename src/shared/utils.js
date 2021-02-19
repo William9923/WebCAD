@@ -42,6 +42,9 @@ const createColors = () => {
             case "square":
                 colors.push(...createSquareVectorColor(shape.getColor()));
                 break;
+            case "polygon":
+                colors.push(...createPolygonVectorColor(shape.getColor()));
+                break;
         }
     });
     return colors;
@@ -87,7 +90,7 @@ export const render = () => {
                 gl.drawArrays(gl.TRIANGLE_FAN, startIdx[idx], dots[idx]);
                 break;
             case "polygon":
-                if (Context.getInstance().getMode()=="edit-polygon") gl.drawArrays(gl.POINTS, startIdx[idx], dots[idx]);
+                if (Context.getInstance().getMode()=="edit-poly") gl.drawArrays(gl.POINTS, startIdx[idx], dots[idx]);
                 gl.drawArrays(gl.TRIANGLE_FAN, startIdx[idx], dots[idx]);
                 break;
         }

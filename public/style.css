@@ -189,31 +189,16 @@ button:active {
     /* margin: 5px 0; */
 }
 
-/* .row .col{
-    padding: 0 !important;
-} */
-
-/* .row {
-    background-color: black;
-} */
-
 .flex-container {
     display: flex;
     /* background-color: DodgerBlue; */
 }
 
 .flex-container > div {
-    /* background-color: #f1f1f1; */
     margin: 2px;
+    /* background-color: #f1f1f1; */
     /* padding: 20px; */
     /* font-size: 30px; */
 }
 
-/* .flexbox { */
-    /* display: flex; */
-    /* flex-wrap: wrap; */
-    /* justify-content: space-between; */
-    /* align-items: center; */
-    /* } */
-    
-    
+/* end of border canvas and layout */

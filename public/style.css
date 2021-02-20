@@ -3,6 +3,7 @@
     --ascent: #f1d1d0;
     --border-color: #fbaccc;
     --canvas-color:#f4f9f9;
+    overflow: hidden;
 }
 
 body {
@@ -34,9 +35,6 @@ canvas {
 
 
 /* modal */
-
-/* modal */
-
 .button{
     /* background: #1ce; */
     padding: 1em 1em;
@@ -104,3 +102,66 @@ canvas {
 }
 
 /* end modal */
+
+
+/* button */
+button {
+    display: inline-block;
+    border: none;
+    padding: 0.5rem 0.7rem;
+    margin: 0;
+    text-decoration: none;
+    background: #a7a7a7;
+    color: #ffffff;
+    font-family: sans-serif;
+    font-size: 1rem;
+    cursor: pointer;
+    text-align: center;
+    transition: background 250ms ease-in-out, 
+    transform 150ms ease;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+
+button:hover,
+button:focus {
+    background: #696969;
+}
+
+button:focus {
+    outline: 1px solid #fff;
+    outline-offset: -4px;
+}
+
+button:active {
+    transform: scale(0.99);
+}
+/* end button */
+
+/* color picker */
+
+.input-color-container {
+    position: relative;
+    overflow: hidden;
+    width: 32px;
+    height: 32px;
+    border: solid 2px #ddd;
+    border-radius: 40px;
+}
+
+.input-color {
+    position: absolute;
+    right: -8px;
+    top: -8px;
+    width: 56px;
+    height: 56px;
+    border: none;
+}
+
+.input-color-label {
+    cursor: pointer;
+    text-decoration: underline;
+    color: #3498db;
+}
+
+/* end color picker */

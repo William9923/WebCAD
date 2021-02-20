@@ -176,7 +176,7 @@ button:active {
 /* border canvas */
 
 #glCanvas {
-    border-radius:5px;
+    border-radius:10px;
 }
 
 .stacking {

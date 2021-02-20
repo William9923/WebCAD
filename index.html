@@ -44,52 +44,83 @@
                 </center>
                 </div>
             </div>
-            <div class="container">
-            <div class="row">   
-                <div class="flexbox">
-                <div class="col s1">
-                    <!-- color -->
-                    <div class="input-color-container">
-                        <input id="color-input" value="#000002" class="input-color" type="color">
-                      </div>
-                    <!-- color -->
-                </div>
-                <div class="col s1">
-                    <!-- tanda tanya -->
-                    <div>
-                        <button id="modalBtn" class="btn-primary shadow p-0 px-3 popup-trigger sizewidth">?</button>
+            <!-- <div class="container"> -->
+            <!-- <div class="row">   
+                    <div class="col s1">
+                        
+                        <div class="input-color-container">
+                            <input id="color-input" value="#000002" class="input-color" type="color">
+                        </div>
+                        
                     </div>
-                    <!-- tanda tanya  -->
-                </div>
-                <div class="col s3">
-                    <!-- opsi -->
-                    
-                    <select style="width: 300px; height: 2.2rem; align-items: flex-start;" id="selector-model" name="model" class="browser-default" required>
-                        <option value="" disabled selected>Choose your option</option>
-                        <option value="line">Create Line</option>
-                        <option value="square">Create Square</option>
-                        <option value="poly">Create Polygon</option>
-                        <option value="edit-line">Edit Line</option>
-                        <option value="edit-square">Edit Square</option>
-                        <option value="edit-poly">Edit Polygon</option>
-                    </select>
-                    
-                </div>
+                    <div class="col s1">
+                        
+                        <div>
+                            <button id="modalBtn" class="btn-primary shadow p-0 px-3 popup-trigger sizewidth">?</button>
+                        </div>
+                        
+                    </div>
+                    <div class="col s1">
+                        <select style="width: 300px; height: 2.2rem; align-items: flex-start;" id="selector-model" name="model" class="browser-default" required>
+                            <option value="" disabled selected>Choose your option</option>
+                            <option value="line">Create Line</option>
+                            <option value="square">Create Square</option>
+                            <option value="poly">Create Polygon</option>
+                            <option value="edit-line">Edit Line</option>
+                            <option value="edit-square">Edit Square</option>
+                            <option value="edit-poly">Edit Polygon</option>
+                        </select>
+                    </div>
+            </div> -->
+            <center>
+            <div style="width: 80%; margin-bottom: 10px;">
+                <div class="flex-container">
+                    <div>
+                        <div class="input-color-container">
+                            <input id="color-input" value="#000002" class="input-color" type="color">
+                        </div>
+                    </div>
+                    <div>
+                        <div>
+                            <button id="modalBtn" class="btn-primary shadow p-0 px-3 popup-trigger sizewidth">?</button>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="col s1">
+                            <select style="width: 300px; height: 2.2rem; align-items: flex-start;" id="selector-model" name="model" class="browser-default" required>
+                                <option value="" disabled selected>Choose your option</option>
+                                <option value="line">Create Line</option>
+                                <option value="square">Create Square</option>
+                                <option value="poly">Create Polygon</option>
+                                <option value="edit-line">Edit Line</option>
+                                <option value="edit-square">Edit Square</option>
+                                <option value="edit-poly">Edit Polygon</option>
+                            </select>
+                        </div>
+                    </div>  
                 </div>
             </div>
-            </div>
+            </center>
+            <!-- </div> -->
                     
 
                     
         </div>
-        <div class="row">
+        <!-- <div class="row"> -->
             <center>
-                <div id=>
-                <canvas id="glCanvas" width="900" height="612">
+                <div class="inliners">
+                    <canvas style="display: inline-block;" id="glCanvas" width="900" height="512">    
+                    </canvas>
                 </div>
-                </canvas>
+                
+                
+                <div class="inliners" style="position: absolute; margin-left: 10px;">
+                    <button class="stacking">x</button> 
+                    <button class="stacking">x</button> 
+                </div>
+                
             </center>
-        </div>
+        
         <div class="btn-flex-wrapper">
             <button class="btn waves-effect waves-light btn-small purple" id="resetBtn" type="button"
                 name="action">Reset

@@ -151,6 +151,7 @@ export const mouseDownEditPolygonEvent = (event) => {
     // threshold passed, found target
     if (minIdx != -1 && min != 999) {
         const polygon = Context.getInstance().getShapes()[minIdx];
+        polygon.setColor(Context.getInstance().getColor());
         Context.getInstance().getShapes().splice(minIdx, 1);
         Context.getInstance().getShapes().push(polygon);
         Context.getInstance()._editShapeControlPointIdx = nPoint;

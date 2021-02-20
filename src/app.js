@@ -162,7 +162,6 @@ const attachColorPickerListener = () => {
         const blue = parseInt(hex_code[5] + hex_code[6], 16);
 
         Context.getInstance().setColor([red/255.0, green/255.0, blue/255.0]);
-        console.log("tes");
         console.log(Context.getInstance().getColor());
     });
 }

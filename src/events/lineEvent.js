@@ -71,6 +71,7 @@ export const mouseDownEditLineEvent = (event) => {
     // threshold passed, found target
     if (minIdx != -1 && min != 999) {
         const line = Context.getInstance().getShapes()[minIdx];
+        line.setColor(Context.getInstance().getColor());
         Context.getInstance().getShapes().splice(minIdx,1);
         Context.getInstance().getShapes().push(line);
         Context.getInstance()._editShapeControlPointIdx = nPoint;
@@ -94,6 +95,7 @@ export const mouseMovingEditLineEvent = (event) => {
         const y = -1 + 2 * (canvas.height - event.offsetY) / canvas.height;
         const lastIdx = Context.getInstance().getShapes().length - 1;
         Context.getInstance().getShapes()[lastIdx].setPoint(vec2(x, y), Context.getInstance()._editShapeControlPointIdx);
+        // Context.getInstance().getShapes()[lastIdx].setColor(Context.getInstance().getColor());
         render();
     }
     

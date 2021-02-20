@@ -19,7 +19,7 @@
             2D CAD Web
         </h2>
     </header> -->
-
+    <div style="height: 9px;"></div>
     <div class="container">
         <!-- <div class="divider"></div> -->
         <div class="row">
@@ -35,7 +35,6 @@
                         <h5 id="judul">Pilih Opsi Aksi (actions)</h5>
                     </div>
                     <div style="margin-right: 20px;" class="modal-body">
-                        <!-- <p>Hello</p> -->
                         <div style="height: 15px;"></div>
                         <h6 style="font-size: medium;" id="isi">Pilih Opsi Tools Menggambar Denah, pilih warna pada roda warna untuk memilih warna sebelum membuat suatu bentuk</h6>
                         <div style="height: 30px;"></div>
@@ -44,34 +43,7 @@
                 </center>
                 </div>
             </div>
-            <!-- <div class="container"> -->
-            <!-- <div class="row">   
-                    <div class="col s1">
-                        
-                        <div class="input-color-container">
-                            <input id="color-input" value="#000002" class="input-color" type="color">
-                        </div>
-                        
-                    </div>
-                    <div class="col s1">
-                        
-                        <div>
-                            <button id="modalBtn" class="btn-primary shadow p-0 px-3 popup-trigger sizewidth">?</button>
-                        </div>
-                        
-                    </div>
-                    <div class="col s1">
-                        <select style="width: 300px; height: 2.2rem; align-items: flex-start;" id="selector-model" name="model" class="browser-default" required>
-                            <option value="" disabled selected>Choose your option</option>
-                            <option value="line">Create Line</option>
-                            <option value="square">Create Square</option>
-                            <option value="poly">Create Polygon</option>
-                            <option value="edit-line">Edit Line</option>
-                            <option value="edit-square">Edit Square</option>
-                            <option value="edit-poly">Edit Polygon</option>
-                        </select>
-                    </div>
-            </div> -->
+           
             <center>
             <div style="width: 80%; margin-bottom: 10px;">
                 <div class="flex-container">
@@ -94,9 +66,29 @@
                         </div>
                     </div>  
                     <div>
-                        <div class="input-color-container">
+                        <div style="margin-left: 2px;" class="input-color-container">
                             <input id="color-input" value="#000002" class="input-color" type="color">
                         </div>
+                    </div>
+                    <div>
+                        <div style="background-color: rgba(0, 0, 0, 0); width: 270px; cursor: context-menu;" id="x" class="btn-primary shadow p-0 px-3 popup-trigger sizewidth">
+                            
+                        </div>
+                    </div>
+                    <div>
+                        <button id="resetBtn" name="action" type="button" class="btn-primary shadow p-0 px-3 popup-trigger sizewidth">
+                            RESET
+                        </button>
+                    </div>
+                    <div>
+                        <button id="importBtn" name="action" type="button" class="btn-primary shadow p-0 px-3 popup-trigger sizewidth">
+                            IMPORT
+                        </button>
+                    </div>
+                    <div>
+                        <button id="exportBtn" name="action" type="button" class="btn-primary shadow p-0 px-3 popup-trigger sizewidth">
+                            EXPORT
+                        </button>
                     </div>
                 </div>
             </div>
@@ -109,19 +101,19 @@
         <!-- <div class="row"> -->
             <center>
                 <div class="inliners">
-                    <canvas style="display: inline-block;" id="glCanvas" width="900" height="512">    
+                    <canvas style="display: inline-block;" id="glCanvas" width="900" height="552">    
                     </canvas>
                 </div>
                 
                 
-                <div class="inliners" style="position: absolute; margin-left: 10px;">
+                <!-- <div class="inliners" style="position: absolute; margin-left: 10px;">
                     <button class="stacking">x</button> 
                     <button class="stacking">x</button> 
-                </div>
+                </div> -->
                 
             </center>
         
-        <div class="btn-flex-wrapper">
+        <!-- <div class="btn-flex-wrapper">
             <button class="btn waves-effect waves-light btn-small purple" id="resetBtn" type="button"
                 name="action">Reset
                 <i class="material-icons right">search</i>
@@ -132,17 +124,18 @@
             <button class="btn waves-effect waves-light btn-small purple" id="exportBtn" type="button" name="action">Export
                 <i class="material-icons right">search</i>
             </button>
-        </div>
-
+        </div> -->
+        <center>
+            <br>
         <input type="file" id="file-import">
-
-        <footer>
+        </center>
+        <!-- <footer>
             <div class="container centered">
                 <hr>
                 <div class="footer-text sans">Copyright &copy; 2021 <a href="https://william9923.github.io/#title"
                         target="_blank"><strong>William</strong></a> - <strong>13518138</strong></div>
             </div>
-        </footer>
+        </footer> -->
 
     </div>
 

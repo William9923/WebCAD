@@ -9,6 +9,7 @@
 body {
     background-color: var(--primary);
 }
+
 canvas {
     background-color: var(--canvas-color);
 }
@@ -191,7 +192,14 @@ button:active {
 
 .flex-container {
     display: flex;
+    
+    /* overflow: hidden; */
     /* background-color: DodgerBlue; */
+}
+
+.centered {
+    /* position: absolute; */
+    /* margin: 0 500px; */
 }
 
 .flex-container > div {

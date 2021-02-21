@@ -33,8 +33,6 @@ canvas {
     text-align: center;
 }
 
-
-
 /* modal */
 .button{
     /* background: #1ce; */
@@ -187,26 +185,18 @@ button:active {
 
 .inliners {
     display: inline-block;
-    /* margin: 5px 0; */
 }
 
 .flex-container {
     display: flex;
-    
-    /* overflow: hidden; */
-    /* background-color: DodgerBlue; */
 }
 
 .centered {
-    /* position: absolute; */
-    /* margin: 0 500px; */
+    
 }
 
 .flex-container > div {
     margin: 2px;
-    /* background-color: #f1f1f1; */
-    /* padding: 20px; */
-    /* font-size: 30px; */
 }
 
 /* end of border canvas and layout */

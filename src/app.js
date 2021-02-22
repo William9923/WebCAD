@@ -140,10 +140,14 @@ const attachExternalFileListener = () => {
 
     document.querySelector("#exportBtn").addEventListener('click', function () {
         const data = "data:text/json;charset=utf-8," + encodeURIComponent(prepareExport());
+        const date = new Date();
+
+        const filename = `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}` + "-Output"
 
         let downloadAnchorNode = document.createElement('a');
         downloadAnchorNode.setAttribute("href", data);
-        downloadAnchorNode.setAttribute("download", "Testing" + ".json");
+
+        downloadAnchorNode.setAttribute("download", filename + ".json");
 
         document.body.appendChild(downloadAnchorNode); // required for firefox
         downloadAnchorNode.click();

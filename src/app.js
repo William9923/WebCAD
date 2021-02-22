@@ -113,8 +113,7 @@ const attachEventListener = () => {
 }
 
 const attachExternalFileListener = () => {
-    document.querySelector("#file-import").addEventListener("change", function (event) {
-        file = event.target.files[0];
+    document.querySelector("#importBtn").addEventListener("click", function (event) {
 
         if (!file) {
             alert("File is not supported for this web application");
@@ -133,6 +132,10 @@ const attachExternalFileListener = () => {
             alert("File is not supported for this web application");
         }
         reader.readAsText(file)
+    });
+
+    document.querySelector("#file-import").addEventListener("change", function (event) {
+        file = event.target.files[0];
     });
 
     document.querySelector("#exportBtn").addEventListener('click', function () {

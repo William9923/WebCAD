@@ -1,6 +1,7 @@
 import { Context } from '../models/Context.js';
 import Line, { createLineVectorColor } from '../models/Line.js';
 import Square, { createSquareVectorColor, findCrossPoint } from '../models/Square.js';
+import Polygon, { createPolygonVectorColor } from '../models/polygon.js';
 
 export const clear = () => {
     Context.getInstance().reset();
@@ -40,6 +41,9 @@ const createColors = () => {
                 break;
             case "square":
                 colors.push(...createSquareVectorColor(shape.getColor()));
+                break;
+            case "polygon":
+                colors.push(...createPolygonVectorColor(shape.getArrayOfPoints(), shape.getColor()));
                 break;
         }
     });
@@ -85,6 +89,10 @@ export const render = () => {
                 if (Context.getInstance().getMode()=="edit-square") gl.drawArrays(gl.POINTS, startIdx[idx], dots[idx]);
                 gl.drawArrays(gl.TRIANGLE_FAN, startIdx[idx], dots[idx]);
                 break;
+            case "polygon":
+                if (Context.getInstance().getMode()=="edit-poly") gl.drawArrays(gl.POINTS, startIdx[idx], dots[idx]);
+                gl.drawArrays(gl.TRIANGLE_FAN, startIdx[idx], dots[idx]);
+                break;
         }
     })
 }
@@ -104,7 +112,8 @@ export const parseImport = (text) => {
             case "square" :
                 Context.getInstance().addShape(new Square(shape._points[0], findCrossPoint(shape._points, shape._points[0]), shape._color));
                 break;
-            // add polygon
+            case "polygon" :
+                Context.getInstance().addShape(new Polygon(shape._points, shape._color));
         }
     })
     render();

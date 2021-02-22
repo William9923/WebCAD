@@ -10,6 +10,9 @@ import { mouseDownEditLineEvent, mouseUpEditLineEvent, mouseMovingEditLineEvent 
 import { mouseDownSquareEvent, mouseMovingSquareEvent, mouseUpSquareEvent } from './events/squareEvent.js';
 import { mouseDownEditSquareEvent, mouseMovingEditSquareEvent, mouseUpEditSquareEvent } from './events/squareEvent.js';
 
+import { mouseDownPolygonEvent, mouseMovingPolygonEvent, mouseUpPolygonEvent } from './events/polygonEvent.js';
+import { mouseDownEditPolygonEvent, mouseMovingEditPolygonEvent, mouseUpEditPolygonEvent } from './events/polygonEvent.js';
+
 import { clear, render, parseImport, prepareExport } from './shared/utils.js';
 
 let file = null;
@@ -29,6 +32,12 @@ const attachEventListener = () => {
                 break;
             case "edit-square":
                 mouseMovingEditSquareEvent(event);
+                break;
+            case "poly":
+                mouseMovingPolygonEvent(event);
+                break;
+            case "edit-poly":
+                mouseMovingEditPolygonEvent(event);
                 break;
             default:
                 mouseMovingLineEvent(event);
@@ -51,6 +60,12 @@ const attachEventListener = () => {
             case "edit-square":
                 mouseDownEditSquareEvent(event);
                 break;
+            case "poly":
+                mouseDownPolygonEvent(event);
+                break;
+            case "edit-poly":
+                mouseDownEditPolygonEvent(event);
+                break;
             default:
                 mouseDownLineEvent(event);
                 break;
@@ -70,6 +85,12 @@ const attachEventListener = () => {
                 break;
             case "edit-square":
                 mouseUpEditSquareEvent();
+                break;
+            case "poly":
+                mouseUpPolygonEvent();
+                break;
+            case "edit-poly":
+                mouseUpPolygonEvent();
                 break;
             default:
                 mouseUpLineEvent();
@@ -141,7 +162,6 @@ const attachColorPickerListener = () => {
         const blue = parseInt(hex_code[5] + hex_code[6], 16);
 
         Context.getInstance().setColor([red/255.0, green/255.0, blue/255.0]);
-        console.log("tes");
         console.log(Context.getInstance().getColor());
     });
 }

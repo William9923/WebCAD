@@ -32,7 +32,6 @@ export const mouseMovingSquareEvent = (event) => {
     }
 }
 
-
 export const mouseDownEditSquareEvent = (event) => {
 
     const canvas = Context.getInstance().getCanvas();
@@ -64,6 +63,7 @@ export const mouseDownEditSquareEvent = (event) => {
     // threshold passed, found target
     if (minIdx != -1 && min != 999) {
         const square = Context.getInstance().getShapes()[minIdx];
+        square.setColor(Context.getInstance().getColor());
         Context.getInstance().getShapes().splice(minIdx, 1);
         Context.getInstance().getShapes().push(square);
 
@@ -91,7 +91,6 @@ export const mouseMovingEditSquareEvent = (event) => {
 
         console.log(Context.getInstance().getShapes()[lastIdx]);
         Context.getInstance().getShapes()[lastIdx] = new Square(Context.getInstance()._editShapeControlPointIdx, vec2(x, y), Context.getInstance().getColor())
-        console.log(Context.getInstance().getShapes()[lastIdx]);
         render();
     }
 }

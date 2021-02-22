@@ -22,6 +22,11 @@ export class Context {
         this._shapes = [];
 
         this._currentColor = [0, 0, 0];
+
+        // polygon data
+        this._polygonFinished = false;
+        this._nPolygon = 0; // How many vertices
+        this._arrPolygonVertices = []; // list of vertices
     }
 
     reset() {
@@ -30,6 +35,8 @@ export class Context {
         // editing context
         this._editShapeIdx = -1;
         this._editShapeControlPointIdx = -1;
+        this._polygonFinished = false;
+        this._nPolygon = 0;
     }
 
     static getInstance() {
@@ -112,4 +119,34 @@ export class Context {
         this._mode = mode;
     }
 
+    finishPolygon() {
+        this._polygonFinished = true;
+    }
+
+    isPolygonFinished() {
+        return this._polygonFinished;
+    }
+
+    addPolygonVertex(point) {
+        this._nPolygon++;
+        this._arrPolygonVertices.push(point);
+    }
+
+    getNPolygon() {
+        return this._nPolygon;
+    }
+
+    getPolygonVertices() {
+        return this._arrPolygonVertices;
+    }
+
+    popPolygonVertex() {
+        this._arrPolygonVertices.pop();
+    }
+
+    flushPolygon() {
+        this._nPolygon = 0;
+        this._arrPolygonVertices = [];
+        this._polygonFinished = false;
+    }
 }

@@ -116,7 +116,7 @@ const attachExternalFileListener = () => {
     document.querySelector("#importBtn").addEventListener("click", function (event) {
 
         if (!file) {
-            alert("File is not supported for this web application");
+            alert("No File detected");
             return;
         }
 

@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2D Web CAD | Grafkom</title>
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    
+    <!--Import materialize.css-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css" />
+    <link rel="stylesheet" href="./public/style.css">
+</head>
+
+<body>
+
+    <!-- <header>
+        <h2 class="center-align">
+            2D CAD Web
+        </h2>
+    </header> -->
+
+    <div style="height: 9px;"></div>
+    <center>
+    <div class="inliners centered">
+        <div class="row">
+            <div class="col s12" style="margin-bottom: -15px;">
+                <center>
+                <div id="simpleModal" class="modal-overlay">
+                    <div class="modal-content">
+                    <div class="modal-header">
+                        <span class="closeBtn">x</span>
+                        <h5 id="judul">Pilih Opsi Aksi (actions)</h5>
+                    </div>
+                    <div style="margin-right: 20px;" class="modal-body">
+                        <div style="height: 15px;"></div>
+                        <h6 style="font-size: medium;" id="isi">Pilih Opsi Tools Menggambar Denah, pilih warna pada roda warna untuk memilih warna sebelum membuat suatu bentuk</h6>
+                        <div style="height: 30px;"></div>
+                    </div>
+                    </div>
+                </center>
+                </div>
+            </div>
+           
+            <!-- <center> -->
+            <div style="width: 80%; margin-bottom: 10px;">
+                <div class="flex-container">
+                    <div>
+                        <div>
+                            <button id="modalBtn" class="btn-primary shadow p-0 px-3 popup-trigger sizewidth">?</button>
+                        </div>
+                    </div>
+                     <div>
+                        <div class="col s1">
+                            <select style="width: 250px; height: 2.2rem; align-items: flex-start;" id="selector-model" name="model" class="browser-default" required>
+                                <option value="" disabled selected>Choose your option</option>
+                                <option value="line">Create Line</option>
+                                <option value="square">Create Square</option>
+                                <option value="poly">Create Polygon</option>
+                                <option value="edit-line">Edit Line</option>
+                                <option value="edit-square">Edit Square</option>
+                                <option value="edit-poly">Edit Polygon</option>
+                            </select>
+                        </div>
+                    </div>  
+                    <div>
+                        <div style="margin-left: 2px;" class="input-color-container">
+                            <input id="color-input" value="#000002" class="input-color" type="color">
+                        </div>
+                    </div>
+                    <div>
+                        <div style="background-color: rgba(0, 0, 0, 0); width: 10px; cursor: context-menu;" id="x" class="btn-primary shadow p-0 px-3 popup-trigger sizewidth">
+                            
+                        </div>
+                    </div>
+                    <div>
+                        <button id="resetBtn" name="action" type="button" class="btn-primary shadow p-0 px-3 popup-trigger sizewidth">
+                            RESET
+                        </button>
+                    </div>
+                    <div>
+                        <button id="importBtn" name="action" type="button" class="btn-primary shadow p-0 px-3 popup-trigger sizewidth">
+                            IMPORT
+                        </button>
+                    </div>
+                    <div>
+                        <button id="exportBtn" name="action" type="button" class="btn-primary shadow p-0 px-3 popup-trigger sizewidth">
+                            EXPORT
+                        </button>
+                    </div>
+                </div>
+            </div>  
+            </center>                    
+                    
+        </div>
+            <center>
+                <div class="inliners">
+                    <canvas style="display: inline-block;" id="glCanvas" width="582" height="582">    
+                    </canvas>
+                </div>                
+            </center>
+        
+        
+        <center>
+            <br>
+        <input type="file" id="file-import">
+        </center>
+
+    </div>
+
+    <script id="vertex-shader" type="x-shader/x-vertex">
+        attribute vec4 vPosition;
+        attribute vec4 vColor;
+        varying vec4 fColor;
+        void main()
+        {
+          gl_Position = vPosition;
+          fColor = vColor;
+        }
+      </script>
+
+    <script id="fragment-shader" type="x-shader/x-fragment">
+        precision mediump float;
+        varying vec4 fColor;
+        void main()
+        {
+          gl_FragColor = fColor;
+        }
+      </script>
+
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js">
+    </script>
+    <script type="text/javascript" src="./public/webgl-utils.js"></script>
+    <script type="text/javascript" src="./public/popup.js"></script>
+    <script type="text/javascript" src="./public/utility.js"></script>
+
+    <script type="module" src="./src/app.js"></script>
+</body>
+
+</html>
